@@ -5,6 +5,7 @@ import cors from 'cors';
 import routes from './routes/index';
 import download from './routes/download';
 import mongoose from 'mongoose';
+import {CronJob} from 'cron';
 
 
 //Connect to the Mongo databse
@@ -41,3 +42,10 @@ app.get('/public/*', function(req, res, next) {
 app.listen(PORT, () => {
     console.log(`File Share Application is running on ${PORT}!`);
 });
+
+const job = new CronJob('* * * * * *', function() {
+	//const d = new Date();
+    //console.log('This is a test to check if it works');
+    
+});
+job.start();

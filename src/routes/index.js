@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, text } from 'express';
 import { nanoid } from 'nanoid'
 import UploadFile from '../models/uploadFile';
 import path from 'path';
@@ -24,8 +24,20 @@ router.post('/', async (req, res) => {
 
         //Uploads the data on the carr listing to mongo db
         //Gets the value inserted
-        const fileDetails = new UploadFile({ fileName: files.upload.name, urlShortCode: nanoid() })
-
+        //if urlExpiry field does not exist, automatically put an expiry of one hour
+        //else assign expiry hour using user
+        if (!fields.urlExpiry)
+        {
+            var expireDate = new Date();
+            expireDate.setHours(expireDate.getHours() + 1);
+            var fileDetails = new UploadFile({ fileName: files.upload.name, urlShortCode: nanoid(), urlExpiry: expireDate })
+        }
+        else
+        {
+            var expireDate = new Date();
+            expireDate.setHours(expireDate.getHours() + parseInt(fields.urlExpiry));
+            var fileDetails = new UploadFile({ fileName: files.upload.name, urlShortCode: nanoid(), urlExpiry: expireDate })
+        }
         //Saves the Car add
         fileDetails.save(function (err) {
             if (err) console.log(err);
