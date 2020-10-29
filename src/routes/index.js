@@ -4,12 +4,14 @@ import UploadFile from '../models/uploadFile';
 import path from 'path';
 import fs from 'fs';
 import formidable from 'formidable';
+import moment from 'moment';
 
 
 const router = Router();
 
 //POST method
 router.post('/', async (req, res) => {
+    let canadaTime = moment().tz("America/Toronto");
     var form = new formidable.IncomingForm();
     form.uploadDir = path.join(__dirname, '../public/files');
     form.parse(req, function (err, fields, files) {
@@ -22,26 +24,21 @@ router.post('/', async (req, res) => {
         });
         console.log('Received upload');
 
-        //Uploads the data on the carr listing to mongo db
-        //Gets the value inserted
-        //if urlExpiry field does not exist, automatically put an expiry of one hour
-        //else assign expiry hour using user
-        if (!fields.urlExpiry)
-        {
-            var expireDate = new Date();
-            expireDate.setHours(expireDate.getHours() + 1);
-            var fileDetails = new UploadFile({ fileName: files.upload.name, urlShortCode: nanoid(), urlExpiry: expireDate })
+        //Check if URLEXPIRY field is filled in or sets a default value with 1 hour
+        if (!fields.urlExpiryTime) {
+            canadaTime.add(1, 'hours');
         }
-        else
-        {
-            var expireDate = new Date();
-            expireDate.setHours(expireDate.getHours() + parseInt(fields.urlExpiry));
-            var fileDetails = new UploadFile({ fileName: files.upload.name, urlShortCode: nanoid(), urlExpiry: expireDate })
+        else {
+            canadaTime.add(parseInt(fields.urlExpiryTime), 'hours');
         }
-        //Saves the Car add
+
+        var fileDetails = new UploadFile({ fileName: files.upload.name, urlShortCode: nanoid(), urlExpiry: canadaTime.format() })
+
+        //Save the file Details
         fileDetails.save(function (err) {
             if (err) console.log(err);
-            res.send("File Uploaded successfuly")
+            let origin = req.get('host');
+            res.send("File Uploaded successfuly.The file shortCode is : " + fileDetails.urlShortCode + "\n The download API should be like this: " + req.get('host') + "/download/shortCode")
         });
     });
     form.on('end', function (err, fields, files) {

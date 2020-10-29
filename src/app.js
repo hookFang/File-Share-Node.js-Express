@@ -4,8 +4,12 @@ import express from 'express';
 import cors from 'cors';
 import routes from './routes/index';
 import download from './routes/download';
+import deleteFile from './routes/delete'
 import mongoose from 'mongoose';
-import {CronJob} from 'cron';
+import { CronJob } from 'cron';
+import UploadFile from './models/uploadFile';
+import moment from 'moment';
+import fs from 'fs';
 
 
 //Connect to the Mongo databse
@@ -22,6 +26,26 @@ try {
     console.log("Error : " + err);
 }
 
+//Cron Job to delete expired files and data
+const job = new CronJob('0 */1 * * * *', function () {
+    console.log('This Cron Job runs every Minute to delete expired files and data from MongoDB');
+    UploadFile.find({}, function (err, filesFound) {
+        if (err) console.log(err);
+        //Loops through each element and deletes them if expired 
+        filesFound.forEach(element => {
+            if (moment.tz(element.urlExpiry, "America/Toronto").format() < moment().tz("America/Toronto").format()) {
+                let id = element.id;
+                let fileName = element.fileName;
+                UploadFile.findByIdAndDelete(id, function (err, model) {
+                    //Delete the file too
+                    fs.unlinkSync('./src/public/files/' + fileName);
+                    console.log("File Deleted Succefully !")
+                });
+            }
+        });
+    });
+});
+job.start();
 
 const app = express();
 const PORT = process.env.PORT;
@@ -34,18 +58,15 @@ app.use('/download/:urlShortCode', function (req, res, next) {
     req.shortCode = req.params.urlShortCode;
     next();
 }, download);
+app.use('/delete/:urlShortCode', function (req, res, next) {
+    req.shortCode = req.params.urlShortCode;
+    next();
+}, deleteFile);
 
-app.get('/public/*', function(req, res, next) {
-        res.end('You are not allowed!');
+app.get('/public/*', function (req, res, next) {
+    res.end('You are not allowed!');
 });
 
 app.listen(PORT, () => {
     console.log(`File Share Application is running on ${PORT}!`);
 });
-
-const job = new CronJob('* * * * * *', function() {
-	//const d = new Date();
-    //console.log('This is a test to check if it works');
-    
-});
-job.start();
