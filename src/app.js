@@ -2,7 +2,8 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import routes from './routes/index';
+import routes from './routes/index'
+import upload from './routes/upload';
 import download from './routes/download';
 import deleteFile from './routes/delete'
 import mongoose from 'mongoose';
@@ -53,7 +54,8 @@ const PORT = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/', routes);
+app.use('/', routes)
+app.use('/upload', upload);
 app.use('/download/:urlShortCode', function (req, res, next) {
     req.shortCode = req.params.urlShortCode;
     next();
