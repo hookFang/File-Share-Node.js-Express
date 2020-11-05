@@ -13,7 +13,7 @@ router.get('/', function (req, res) {
 
 /*POST for the Upload button in the index page*/
 router.post('/', function (req, res) {
-   
+   console.log("File is here")
 });
 
 
