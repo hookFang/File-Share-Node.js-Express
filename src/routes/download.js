@@ -8,7 +8,7 @@ const router = Router();
 router.get('/', async (req, res) => {
     const fileDetails = await UploadFile.findDownloadFile(req.shortCode);
     if (fileDetails) {
-        const file = path.join(__dirname, '../public/files/' + fileDetails.fileName);
+        const file = path.join(__dirname, '../../public/files/' + fileDetails.fileName);
         res.download(file);
     }
 });

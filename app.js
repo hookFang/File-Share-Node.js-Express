@@ -2,14 +2,15 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import routes from './routes/index'
-import upload from './routes/upload';
-import download from './routes/download';
-import deleteFile from './routes/delete'
+import routes from './src/routes/index'
+import upload from './src/routes/upload';
+import download from './src/routes/download';
+import deleteFile from './src/routes/delete'
 import mongoose from 'mongoose';
 import { CronJob } from 'cron';
-import UploadFile from './models/uploadFile';
+import UploadFile from './src/models/uploadFile';
 import moment from 'moment';
+import path from 'path';
 import fs from 'fs';
 
 
@@ -51,9 +52,12 @@ job.start();
 const app = express();
 const PORT = process.env.PORT;
 
+app.set('views', path.join(__dirname, 'views'));
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes)
 app.use('/upload', upload);
 app.use('/download/:urlShortCode', function (req, res, next) {
