@@ -23,3 +23,9 @@ If the user Signs Up for an account, the person who needs to download the file s
 ### To Delete a file
 	Example for download: localhost:1337/deleteAPI/shortCode
 	Replace shortcode with the value recived when you uploaded the file.
+	
+## CRON Job
+A Cron Job runs every minute to delete expired files and data from MongoDB. This ensures that no files are left behind in the server after the expiry time.
+
+## Future plans
+Encrypt the uploaded files!
