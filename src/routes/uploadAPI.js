@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
           fileDetails.urlShortCode +
           "\n The download API should be like this: " +
           req.get("host") +
-          "/download/shortCode"
+          "/downloadAPI/shortCode"
       );
     });
   });
