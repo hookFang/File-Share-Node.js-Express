@@ -2,9 +2,10 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import routes from "./src/routes/index";
+import uploadAPI from "./src/routes/uploadAPI";
+import download from "./src/routes/downloadAPI";
+import deleteFile from "./src/routes/deleteAPI";
 import upload from "./src/routes/upload";
-import download from "./src/routes/download";
-import deleteFile from "./src/routes/delete";
 import mongoose from "mongoose";
 import { CronJob } from "cron";
 import UploadFile from "./src/models/uploadFile";
@@ -41,7 +42,7 @@ const job = new CronJob("0 */1 * * * *", function () {
         let fileName = element.fileName;
         UploadFile.findByIdAndDelete(id, function (err, model) {
           //Delete the file too
-          fs.unlinkSync("./src/public/files/" + fileName);
+          fs.unlinkSync("./public/files/" + fileName);
           console.log("File Deleted Succefully !");
         });
       }
@@ -61,9 +62,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/", routes);
+app.use("/uploadAPI", uploadAPI);
 app.use("/upload", upload);
 app.use(
-  "/download/:urlShortCode",
+  "/downloadAPI/:urlShortCode",
   function (req, res, next) {
     req.shortCode = req.params.urlShortCode;
     next();
@@ -71,7 +73,7 @@ app.use(
   download
 );
 app.use(
-  "/delete/:urlShortCode",
+  "/deleteAPI/:urlShortCode",
   function (req, res, next) {
     req.shortCode = req.params.urlShortCode;
     next();

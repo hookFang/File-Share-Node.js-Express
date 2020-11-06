@@ -53,7 +53,7 @@ html
             br 
             | #{shareLink}
     section.text-center.d-flex.flex-column.justify-content-center.align-items-center.flex-md-row.flex-lg-row.flex-xl-row
-      form(method='POST' action='/' enctype='multipart/form-data')
+      form(method='POST' action='/upload' enctype='multipart/form-data')
         input.d-none(type="file" onchange="this.form.submit()" id="selectedFile" name="upload")
         button.btn.btn-primary.btn-lg.d-flex.justify-content-center(type="button" onclick="document.getElementById('selectedFile').click();" style="font-size: 25px;font-weight: normal;")
           i.fa.fa-upload(style="margin-right: 15px;")
