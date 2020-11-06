@@ -1,4 +1,4 @@
-import { Router, text } from 'express';
+import { Router } from 'express';
 import { nanoid } from 'nanoid'
 import UploadFile from '../models/uploadFile';
 import path from 'path';

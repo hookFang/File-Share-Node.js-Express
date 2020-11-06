@@ -11,7 +11,7 @@ router.delete('/', async(req, res) => {
     await UploadFile.findOneAndDelete({urlShortCode : req.shortCode}, function(err, deletedFile) {
         if (err) console.log(err);
         //Removes the file from the directory 
-        fs.unlinkSync(path.join(__dirname, '../public/files/' + deletedFile.fileName))
+        fs.unlinkSync(path.join(__dirname, '../../public/files/' + deletedFile.fileName))
         console.log("Data removed from  MongoDB, File will be deleted soon !")
         res.send("File Deleted Successfully!")
     });
