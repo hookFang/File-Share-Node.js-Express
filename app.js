@@ -1,5 +1,8 @@
 import "dotenv/config";
 import express from "express";
+import session from "express-session";
+import passport from "passport";
+import { Strategy } from "passport-local";
 import cors from "cors";
 import routes from "./src/routes/index";
 import uploadAPI from "./src/routes/uploadAPI";
@@ -12,6 +15,9 @@ import UploadFile from "./src/models/uploadFile";
 import moment from "moment";
 import path from "path";
 import fs from "fs";
+import userModel from "./src/models/user";
+
+const LocalStrategy = Strategy();
 
 //Connect to the Mongo databse
 try {
@@ -29,6 +35,8 @@ try {
 } catch (err) {
   console.log("Error : " + err);
 }
+
+
 
 //Cron Job to delete expired files and data
 const job = new CronJob("0 */1 * * * *", function () {
@@ -56,6 +64,52 @@ const PORT = process.env.PORT;
 
 app.set("views", path.join(__dirname, "src/views"));
 app.set("view engine", "pug");
+
+// required for passport session
+app.use(session({
+  secret: 'secrettexthere',
+  saveUninitialized: true,
+  resave: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Serialize user
+passport.serializeUser(function (user, done) {
+  done(null, user.id)
+});
+
+//Deserialize user try to find username
+passport.deserializeUser(function (id, done) {
+  userModel.findById(id, function (err, user) {
+      done(err, user);
+  });
+});
+
+
+//Local strategy used for logging users
+passport.use(new LocalStrategy(
+  function (email, password, done) {
+      userModel.findOne({
+          email: email
+      }, function (err, user) {
+          if (err) {
+              return done(err);
+          }
+
+          if (!user) {
+              return done(null, false);
+          }
+
+          //Compare hashed passwords
+          if (!bcrypt.compareSync(password, user.password)) {
+              return done(null, false, { message: 'Incorrect password.' });
+          }
+
+          return done(null, user);
+      });
+  }
+));
 
 app.use(cors());
 app.use(express.json());

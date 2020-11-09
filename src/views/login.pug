@@ -26,42 +26,23 @@ html
           #navcol-1.collapse.navbar-collapse
             ul.nav.navbar-nav
               li.nav-item
-                a.nav-link.active(href="/") Home
+                a.nav-link.active(href="/index") Home
               li.nav-item
                 a.nav-link.active(href="/about") About
               li.nav-item
                 a.nav-link(href="#") API
             ul.nav.navbar-nav.ml-auto
               li.nav-item
-                a.nav-link.active(href="/register") Sign Up
+                a.nav-link.active(href="/signup") Sign Up
               li.nav-item
                 a.nav-link.active(href="/login") Log In
-    section.d-flex.d-lg-flex.flex-column.justify-content-center.align-items-lg-center(style="margin-top: 15%;")
-      h1(style="text-align: center;") File Share
-      if(!fileSaved)
-        p.text-break.text-center(style="text-align: center;font-family: ABeeZee, sans-serif;font-weight: bold;line-height: 30px;")
-            | Simply share you're file with anyone from the world !!   
-            br
-            | Easy and convenient.
-            br
-            | Sign Up and share files privately !
-      else 
-        p.text-break.text-center(style="text-align: center;font-family: ABeeZee, sans-serif;font-weight: bold;line-height: 30px;")
-            | File has been succesfully uploaded !   
-            br
-            | File is Ready to share Now ! Please copy You're Link below
-            br 
-            | #{shareLink}
-    section.text-center.d-flex.flex-column.justify-content-center.align-items-center.flex-md-row.flex-lg-row.flex-xl-row
-      form(method='POST' action='/upload' enctype='multipart/form-data')
-        input.d-none(type="file" onchange="this.form.submit()" id="selectedFile" name="upload")
-        button.btn.btn-primary.btn-lg.d-flex.justify-content-center(type="button" onclick="document.getElementById('selectedFile').click();" style="font-size: 25px;font-weight: normal;")
-          i.fa.fa-upload(style="margin-right: 15px;")
-          span Upload
-      div(style="height: 40px;width: 20%;")
-      a.btn.btn-primary.btn-lg.d-flex(role="button" style="font-weight: normal;height: 55px;font-size: 25px;" href="/register")
-        i.fa.fa-user(style="margin-right: 15px;")
-        span Sign Up
+    .login-card(style="margin-top: 150px;background: #ffca42;")
+      p.profile-name-card(style="font-family: Bungee, cursive;") Log In
+      form.form-signin(method='POST' action='/login')
+        span.reauth-email  
+        input#inputEmail.form-control(ID="email" type="email" required="" placeholder="Email address" autofocus="")
+        input#inputPassword.form-control(ID="password" type="password" required="" placeholder="Password")
+        button.btn.btn-primary.btn-block.btn-lg.btn-signin(ID="buttonLogin" type="submit") Log in
     script(src="assets/js/jquery.min.js")
     script(src="assets/bootstrap/js/bootstrap.min.js")
     script(src="assets/js/WOWSlider-about-us.js")
