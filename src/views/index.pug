@@ -32,10 +32,14 @@ html
               li.nav-item
                 a.nav-link(href="#") API
             ul.nav.navbar-nav.ml-auto
-              li.nav-item
-                a.nav-link.active(href="/register") Sign Up
-              li.nav-item
-                a.nav-link.active(href="/login") Log In
+              if(user)
+                 li.nav-item
+                  a.nav-link.active(href="/logout") Logout
+              else
+                li.nav-item
+                  a.nav-link.active(href="/register") Sign Up
+                li.nav-item
+                  a.nav-link.active(href="/login") Log In
     section.d-flex.d-lg-flex.flex-column.justify-content-center.align-items-lg-center(style="margin-top: 15%;")
       h1(style="text-align: center;") File Share
       if(!fileSaved)
