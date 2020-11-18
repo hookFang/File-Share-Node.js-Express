@@ -1,0 +1,28 @@
+#navigation-block
+      nav.navbar.navbar-light.navbar-expand-md
+        .container-fluid
+          a.navbar-brand(style="font-family:Bungee, cursive;" href="#") File Share
+          button.navbar-toggler(data-target="#navcol-1" data-toggle="collapse" )
+            span.sr-only Toggle navigation
+            span.navbar-toggler-icon
+          div(id="navcol-1" class="collapse navbar-collapse")
+            ul.nav.navbar-nav
+              li.nav-item
+                a.nav-link.active(href="/") Home
+              li.nav-item
+                a.nav-link.active(href="/about") About
+              li.nav-item
+                a.nav-link(href="#") API
+            ul.nav.navbar-nav.ml-auto
+                if(user)
+                    li.nav-item
+                    a.nav-link.active(href="/logout") Logout
+                else
+                    li.nav-item
+                        a.nav-link.active(href="/register") Sign Up
+                    li.nav-item
+                        a.nav-link.active(href="/login") Log In
+
+script(src="/assets/js/jquery.min.js")
+script(src="/assets/bootstrap/js/bootstrap.min.js")
+script(src="/assets/js/WOWSlider-about-us.js")

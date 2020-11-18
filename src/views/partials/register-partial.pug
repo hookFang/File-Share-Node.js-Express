@@ -1,0 +1,12 @@
+.login-card(style="background: #ffca42;height: 386px;")
+    p.profile-name-card(style="font-family: Bungee, cursive;") Sign Up
+    form.form-signin(method='POST' action='/register')
+        span.reauth-email  
+        input#inputEmail.form-control(ID="email" name="email" type="email" required="" placeholder="Email address" autofocus="")
+        input#inputPassword.form-control(ID="password" name="password" type="password" required="" placeholder="Password")
+        input#inputPassword-1.form-control(ID="confirmPassword" name="confirmPassword" type="password" required="" placeholder="Confirm Password")
+        button.btn.btn-primary.btn-block.btn-lg.btn-signin(ID="signupButton" type="submit") Sign Up
+
+script(src="/assets/js/jquery.min.js")
+script(src="/assets/bootstrap/js/bootstrap.min.js")
+script(src="/assets/js/WOWSlider-about-us.js")

@@ -19,34 +19,14 @@
 </head>
 
 <body style="background: #f2a735;">
-    <div id="navigation-block">
-        <nav class="navbar navbar-light navbar-expand-md">
-            <div class="container-fluid"><a class="navbar-brand" style="font-family:Bungee, cursive;" href="#">File Share</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                <div
-                    class="collapse navbar-collapse" id="navcol-1">
-                    <ul class="nav navbar-nav">
-                        <li class="nav-item"><a class="nav-link active" href="/index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="/about.html">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">API</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link active" href="/signup.html">Sign Up</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="/login.html">Log In</a></li>
-                    </ul>
-            </div>
-    </div>
-    </nav>
-    </div>
-    <div class="d-flex d-lg-flex justify-content-center align-items-center justify-content-lg-center align-items-lg-center highlight-blue" id="About" style="height: 500px;background: #f2a735;">
-        <div class="container">
-            <div class="intro">
-                <h2 class="text-center" style="color: #6f0700;">ABOUT</h2>
-                <hr style="height: 2px;color: #214a80;background-color: #172f76;">
-                <p class="text-center" style="color: #172f76;font-family: Muli, sans-serif;">This API assignment was created by Edwin Christie and Michael Valadao-Martins. The API we decided to create was a file share for users to be able to upload a file and then allow other users to download the file when given a custom link.
-                    The file availability default will be set to one hour unless specified different by the user. Once the file is no longer available it will be deleted from the server. We have also given the option to make the uploaded files private
-                    for users who are logged in.</p>
-            </div>
-            <div class="buttons"></div>
+    <div class="col">
+        <div class="d-flex flex-column align-items-center">
+            <h1 style="text-align: center;font-family: ABeeZee, sans-serif;font-weight: bold;">About Us - File Share</h1>
+            <p class="justify-content-xl-center align-items-xl-center" style="font-family: ABeeZee, sans-serif;text-align: center;letter-spacing: 1px;line-height: 28px;max-width: 80%;">This a file sharing API application, Users can upload a file and it creates a random URL which they can share. It will allow anyone with this URL to download the uploaded file. No need to Sign Up, easy free file sharing service.<br></p>
+        </div>
+        <div class="d-flex flex-column align-items-center" style="margin-top: 5em;">
+            <h1 class="d-inline flex-row" style="text-align: center;font-family: ABeeZee, sans-serif;"><strong>Share Files Privately</strong><br><i class="fa fa-user-secret"></i></h1>
+            <p class="justify-content-xl-center align-items-xl-center" style="font-family: ABeeZee, sans-serif;text-align: center;letter-spacing: 1px;line-height: 28px;max-width: 80%;">If the user Signs Up for an account, the person who needs to download the file should also sign up in order to access the file.<br></p>
         </div>
     </div>
     <script src="assets/js/jquery.min.js"></script>

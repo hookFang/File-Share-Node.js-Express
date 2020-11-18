@@ -5,10 +5,12 @@ import { Strategy } from "passport-local";
 import cors from "cors";
 import routes from "./src/routes/index";
 import uploadAPI from "./src/routes/uploadAPI";
-import download from "./src/routes/downloadAPI";
+import downloadAPI from "./src/routes/downloadAPI";
 import deleteFile from "./src/routes/deleteAPI";
+import download from "./src/routes/download";
 import upload from "./src/routes/upload";
 import login from "./src/routes/login";
+import about from "./src/routes/about";
 import register from "./src/routes/register";
 import mongoose from "mongoose";
 import { CronJob } from "cron";
@@ -82,13 +84,14 @@ app.use("/", routes);
 app.use("/logout", routes);
 app.use("/uploadAPI", uploadAPI);
 app.use("/upload", upload);
+app.use("/about", about);
 app.use(
   "/downloadAPI/:urlShortCode",
   function (req, res, next) {
     req.shortCode = req.params.urlShortCode;
     next();
   },
-  download
+  downloadAPI
 );
 app.use(
   "/deleteAPI/:urlShortCode",
@@ -100,10 +103,18 @@ app.use(
 );
 app.use("/login", login);
 app.use("/register", register);
+app.use(
+  "/download/:urlShortCode",
+  function (req, res, next) {
+    req.shortCode = req.params.urlShortCode;
+    next();
+  },
+  download
+);
 
-app.get("/public/*", function (req, res, next) {
-  res.end("You are not allowed!");
-});
+// app.get("/public/*", function (req, res, next) {
+//   res.end("You are not allowed!");
+// });
 
 //Serialize user
 passport.serializeUser(function (user, done) {
