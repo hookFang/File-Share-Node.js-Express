@@ -5,6 +5,7 @@ import path from "path";
 import fs from "fs";
 import formidable from "formidable";
 import moment from "moment";
+import { userInfo } from "os";
 
 const router = Router();
 
@@ -23,17 +24,37 @@ router.post("/", function (req, res) {
     //By default uploading through UI will have a expiry of 4 hours
     canadaTime.add(4, "hours");
 
-    var fileDetails = new UploadFile({
-      fileName: files.upload.name,
-      urlShortCode: nanoid(),
-      urlExpiry: canadaTime.format(),
-    });
+    if(fields.userHidden) console.log(fields.userHidden)
 
+    if(!fields.userHidden)
+    {
+      var fileDetails = new UploadFile({
+        fileName: files.upload.name,
+        urlShortCode: nanoid(),
+        urlExpiry: canadaTime.format(),
+      });
+    }
+    else
+    {
+      var fileDetails = new UploadFile({
+        fileName: files.upload.name,
+        owner: fields.userHidden,
+        urlShortCode: nanoid(),
+        urlExpiry: canadaTime.format(),
+      });
+    }
     //Save the file Details
     fileDetails.save(function (err) {
       if (err) console.log(err);
       let shareLink = req.get("host") + "/download/" + fileDetails.urlShortCode;
-      res.render("index", { fileSaved: true, shareLink: shareLink });
+      if(!fields.userHidden)
+      {
+        res.render("index", { fileSaved: true, shareLink: shareLink });
+      }
+      else
+      {
+        res.redirect("/mainPage");
+      }
     });
   });
   form.on("end", function (err, fields, files) {

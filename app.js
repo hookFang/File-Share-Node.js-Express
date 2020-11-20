@@ -14,6 +14,7 @@ import upload from "./src/routes/upload";
 import login from "./src/routes/login";
 import about from "./src/routes/about";
 import register from "./src/routes/register";
+import mainPage from "./src/routes/mainPage";
 import mongoose from "mongoose";
 import { CronJob } from "cron";
 import UploadFile from "./src/models/uploadFile";
@@ -88,6 +89,7 @@ app.use("/uploadAPI", uploadAPI);
 app.use("/signUpAPI", signUpAPI);
 app.use("/upload", upload);
 app.use("/about", about);
+app.use("/mainPage", mainPage);
 app.use(
   "/downloadAPI/:urlShortCode",
   function (req, res, next) {

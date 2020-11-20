@@ -31,7 +31,7 @@ router.post("/", function (req, res) {
           req.login(newUser, function (err) {
             console.log("Logging in the new user");
             if (err) console.log(err);
-            return res.redirect("/");
+            return res.redirect("/mainPage");
           });
         });
       });
