@@ -10,14 +10,10 @@ const router = Router();
 
 /* GET main page after login/signup. */
 router.get("/", function (req, res) {
-    UploadFile.find({owner: req.user.id}, function (err, filesFound) {
-        if (err) console.log(err);
-        if(filesFound) console.log(filesFound);
-        console.log(req.user)
+  UploadFile.find({ owner: req.user.id }, function (err, filesFound) {
+    if (err) console.log(err);
     res.render("mainPage", { user: req.user, files: filesFound });
-    })
+  });
 });
-
-
 
 module.exports = router;

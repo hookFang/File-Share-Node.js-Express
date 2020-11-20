@@ -24,6 +24,12 @@
                     button.btn.btn-primary.btn-lg.d-flex.justify-content-center(type='button' style='font-size: 25px;font-weight: normal;')
                         i.fa.fa-pencil(style='margin-right: 15px;')
                         span Edit
-script(src='assets/js/jquery.min.js')
-script(src='assets/bootstrap/js/bootstrap.min.js')
-script(src='assets/js/WOWSlider-about-us.js')
+                    div(style='width: 4em;height: 2em;')
+                    p(id="urlShortCode" style='display:none') #{file.urlShortCode}
+                    button.btn.btn-primary.btn-lg.d-flex.justify-content-center(onclick="copyText()" style='font-size: 25px;font-weight: normal;')
+                        i.fa.fa-pencil(style='margin-right: 15px;')
+                        span Download Link
+script(src='/assets/js/helperFunctions.js')
+script(src='/assets/js/jquery.min.js')
+script(src='/assets/bootstrap/js/bootstrap.min.js')
+script(src='/assets/js/WOWSlider-about-us.js')
