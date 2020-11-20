@@ -2,7 +2,7 @@
 
 function copyText() {
   var temp = document.createElement("input");
-  temp.setAttribute("value", document.domain + "/download" + document.getElementById("urlShortCode").innerHTML);
+  temp.setAttribute("value", document.domain + "/download/" + document.getElementById("urlShortCode").innerHTML);
   document.body.appendChild(temp);
   temp.select();
   document.execCommand("copy");

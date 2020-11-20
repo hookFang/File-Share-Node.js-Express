@@ -54,7 +54,10 @@ const job = new CronJob("0 */1 * * * *", function () {
         let fileName = element.fileName;
         UploadFile.findByIdAndDelete(id, function (err, model) {
           //Delete the file too
-          fs.unlinkSync("./public/files/" + fileName);
+          let filePath = "./public/files/" + fileName;
+          if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+          }
           console.log("File Deleted Succefully !");
         });
       }
