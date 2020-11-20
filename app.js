@@ -2,10 +2,12 @@ import "dotenv/config";
 import express from "express";
 import passport from "passport";
 import { Strategy } from "passport-local";
+import bodyParser from "body-parser";
 import cors from "cors";
 import routes from "./src/routes/index";
 import uploadAPI from "./src/routes/uploadAPI";
 import downloadAPI from "./src/routes/downloadAPI";
+import signUpAPI from "./src/routes/signUpAPI";
 import deleteFile from "./src/routes/deleteAPI";
 import download from "./src/routes/download";
 import upload from "./src/routes/upload";
@@ -67,8 +69,8 @@ app.set("views", path.join(__dirname, "src/views"));
 app.set("view engine", "pug");
 
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 // required for passport session
 app.use(
@@ -83,6 +85,7 @@ app.use(passport.session());
 app.use("/", routes);
 app.use("/logout", routes);
 app.use("/uploadAPI", uploadAPI);
+app.use("/signUpAPI", signUpAPI);
 app.use("/upload", upload);
 app.use("/about", about);
 app.use(
