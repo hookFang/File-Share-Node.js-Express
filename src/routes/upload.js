@@ -13,7 +13,11 @@ const router = Router();
 router.post("/", function (req, res) {
   let canadaTime = moment().tz("America/Toronto");
   var form = new formidable.IncomingForm();
-  form.uploadDir = path.join(__dirname, "../../public/files");
+  var dir = path.join(__dirname, "../../public/files");
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+  form.uploadDir = dir;
   form.parse(req, function (err, fields, files) {
     console.log(files.upload.name);
     //Upload file on our server
@@ -24,18 +28,15 @@ router.post("/", function (req, res) {
     //By default uploading through UI will have a expiry of 4 hours
     canadaTime.add(4, "hours");
 
-    if(fields.userHidden) console.log(fields.userHidden)
+    if (fields.userHidden) console.log(fields.userHidden);
 
-    if(!fields.userHidden)
-    {
+    if (!fields.userHidden) {
       var fileDetails = new UploadFile({
         fileName: files.upload.name,
         urlShortCode: nanoid(),
         urlExpiry: canadaTime.format(),
       });
-    }
-    else
-    {
+    } else {
       var fileDetails = new UploadFile({
         fileName: files.upload.name,
         owner: fields.userHidden,
@@ -47,12 +48,9 @@ router.post("/", function (req, res) {
     fileDetails.save(function (err) {
       if (err) console.log(err);
       let shareLink = req.get("host") + "/download/" + fileDetails.urlShortCode;
-      if(!fields.userHidden)
-      {
+      if (!fields.userHidden) {
         res.render("index", { fileSaved: true, shareLink: shareLink });
-      }
-      else
-      {
+      } else {
         res.redirect("/mainPage");
       }
     });
