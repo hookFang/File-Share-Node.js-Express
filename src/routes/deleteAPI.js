@@ -6,9 +6,10 @@ import path from "path";
 const router = Router();
 
 //DELETE method
-router.delete("/", async (req, res) => {
+router.delete("/", (req, res) => {
   //Deletes the data from MongoDB
-  await UploadFile.findOneAndDelete({ urlShortCode: req.shortCode }, function (err, deletedFile) {
+  UploadFile.findOneAndDelete({ urlShortCode: req.shortCode }, function (err, deletedFile) {
+    console.log(deletedFile);
     if (err) console.log(err);
     //Removes the file from the directory
     fs.unlinkSync(path.join(__dirname, "../../public/files/" + deletedFile.fileName));

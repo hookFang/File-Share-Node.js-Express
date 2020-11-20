@@ -10,6 +10,8 @@ router.get("/", async (req, res) => {
   if (fileDetails) {
     const file = path.join(__dirname, "../../public/files/" + fileDetails.fileName);
     res.download(file);
+  } else {
+    res.send("No File avaialble for download");
   }
 });
 
