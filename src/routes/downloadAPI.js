@@ -8,8 +8,12 @@ const router = Router();
 router.get("/", async (req, res) => {
   const fileDetails = await UploadFile.findDownloadFile(req.shortCode);
   if (fileDetails) {
-    const file = path.join(__dirname, "../../public/files/" + fileDetails.fileName);
-    res.download(file);
+    if (!fileDetails.owner) {
+      const file = path.join(__dirname, "../../public/files/" + fileDetails.fileName);
+      res.download(file);
+    } else {
+      res.sendStatus(403);
+    }
   } else {
     res.send("No File avaialble for download");
   }

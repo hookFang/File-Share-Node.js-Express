@@ -5,6 +5,7 @@ import path from "path";
 import fs from "fs";
 import formidable from "formidable";
 import moment from "moment";
+import verifyToken from "./middleware";
 
 const router = Router();
 
@@ -30,11 +31,20 @@ router.post("/", async (req, res) => {
       canadaTime.add(parseInt(fields.urlExpiryTime), "hours");
     }
 
-    var fileDetails = new UploadFile({
-      fileName: files.upload.name,
-      urlShortCode: nanoid(),
-      urlExpiry: canadaTime.format(),
-    });
+    if (!req.userID) {
+      var fileDetails = new UploadFile({
+        fileName: files.upload.name,
+        urlShortCode: nanoid(),
+        urlExpiry: canadaTime.format(),
+      });
+    } else {
+      var fileDetails = new UploadFile({
+        fileName: files.upload.name,
+        owner: req.userID,
+        urlShortCode: nanoid(),
+        urlExpiry: canadaTime.format(),
+      });
+    }
 
     //Save the file Details
     fileDetails.save(function (err) {

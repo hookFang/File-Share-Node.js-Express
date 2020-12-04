@@ -4,26 +4,32 @@ import passport from "passport";
 import { Strategy } from "passport-local";
 import bodyParser from "body-parser";
 import cors from "cors";
+import mongoose from "mongoose";
+import { CronJob } from "cron";
+import moment from "moment";
+import path from "path";
+import fs from "fs";
+import session from "express-session";
+import bcrypt from "bcryptjs";
+import cookieParser from "cookie-parser";
+
+//Custom Modules
+import Users from "./src/models/user";
+import UploadFile from "./src/models/uploadFile";
 import routes from "./src/routes/index";
 import uploadAPI from "./src/routes/uploadAPI";
 import downloadAPI from "./src/routes/downloadAPI";
 import signUpAPI from "./src/routes/signUpAPI";
+import loginAPI from "./src/routes/loginAPI";
 import deleteFile from "./src/routes/deleteAPI";
 import download from "./src/routes/download";
 import upload from "./src/routes/upload";
 import login from "./src/routes/login";
 import about from "./src/routes/about";
 import register from "./src/routes/register";
+import { verifyToken } from "./src/routes/middleware";
 import mainPage from "./src/routes/mainPage";
-import mongoose from "mongoose";
-import { CronJob } from "cron";
-import UploadFile from "./src/models/uploadFile";
-import moment from "moment";
-import path from "path";
-import fs from "fs";
-import Users from "./src/models/user";
-import session from "express-session";
-import bcrypt from "bcryptjs";
+import { refresh } from "./src/routes/authenticationHelper";
 
 //Connect to the Mongo databse
 try {
@@ -75,6 +81,7 @@ app.set("view engine", "pug");
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 // required for passport session
 app.use(
@@ -88,8 +95,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use("/", routes);
 app.use("/logout", routes);
-app.use("/uploadAPI", uploadAPI);
+app.use("/uploadAPI", verifyToken, uploadAPI);
 app.use("/signUpAPI", signUpAPI);
+app.use("/loginAPI", loginAPI);
 app.use("/upload", upload);
 app.use("/about", about);
 app.use("/mainPage", mainPage);
@@ -110,6 +118,7 @@ app.use(
   deleteFile
 );
 app.use("/login", login);
+app.use("/refresh", refresh);
 app.use("/register", register);
 app.use(
   "/download/:urlShortCode",
