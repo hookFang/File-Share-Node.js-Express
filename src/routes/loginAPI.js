@@ -1,6 +1,5 @@
 "use strict";
 import { Router } from "express";
-import passport from "passport";
 import Users from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";

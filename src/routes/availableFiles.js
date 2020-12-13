@@ -5,9 +5,9 @@ const router = Router();
 
 /* GET main page after login/signup. */
 router.get("/", function (req, res) {
-  UploadFile.find({ owner: req.user.id }, function (err, filesFound) {
+  UploadFile.find({ sharedWithUsers: req.user.email }, function (err, filesFound) {
     if (err) console.log(err);
-    res.render("mainPage", { user: req.user, files: filesFound });
+    res.render("availableFiles", { user: req.user, files: filesFound });
   });
 });
 

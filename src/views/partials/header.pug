@@ -7,8 +7,12 @@
             span.navbar-toggler-icon
           div(id="navcol-1" class="collapse navbar-collapse")
             ul.nav.navbar-nav
-              li.nav-item
-                a.nav-link.active(href="/") Home
+              if(user)
+               li.nav-item
+                  a.nav-link.active(href="/mainPage") Home
+              else
+                li.nav-item
+                  a.nav-link.active(href="/") Home
               li.nav-item
                 a.nav-link.active(href="/about") About
               li.nav-item

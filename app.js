@@ -30,6 +30,8 @@ import register from "./src/routes/register";
 import { verifyToken } from "./src/routes/middleware";
 import mainPage from "./src/routes/mainPage";
 import { refresh } from "./src/routes/authenticationHelper";
+import shareFileAPI from "./src/routes/shareFileAPI";
+import availableFiles from "./src/routes/availableFiles";
 
 //Connect to the Mongo databse
 try {
@@ -101,6 +103,17 @@ app.use("/loginAPI", loginAPI);
 app.use("/upload", upload);
 app.use("/about", about);
 app.use("/mainPage", mainPage);
+app.use("/availableFiles", availableFiles);
+app.use(
+  "/shareFileAPI/:fileCode/:emailID",
+  verifyToken,
+  function (req, res, next) {
+    req.fileCode = req.params.fileCode;
+    req.emailID = req.params.emailID;
+    next();
+  },
+  shareFileAPI
+);
 app.use(
   "/downloadAPI/:urlShortCode",
   function (req, res, next) {

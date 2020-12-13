@@ -5,7 +5,7 @@ const router = Router();
 
 /*GET for login*/
 router.get("/", function (req, res) {
-  res.render("about");
+  res.render("about", { user: req.user });
 });
 
 module.exports = router;

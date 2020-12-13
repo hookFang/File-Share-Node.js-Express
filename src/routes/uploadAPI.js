@@ -11,6 +11,7 @@ const router = Router();
 
 //POST method
 router.post("/", async (req, res) => {
+  console.log(req);
   let canadaTime = moment().tz("America/Toronto");
   var form = new formidable.IncomingForm();
   form.uploadDir = path.join(__dirname, "../../public/files");

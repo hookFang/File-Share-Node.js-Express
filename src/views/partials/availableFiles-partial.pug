@@ -27,14 +27,6 @@
             tr
                 td #{file.fileName}
                 td.d-flex.flex-column.flex-sm-row.flex-md-row.flex-lg-row.flex-xl-row
-                    button.btn.btn-primary.btn-lg.d-flex.justify-content-center(type='button' style='font-size: 25px;font-weight: normal;')
-                        i.fa.fa-remove(style='margin-right: 15px;')
-                        span Delete
-                    div(style='width: 4em;height: 2em;')
-                    button.btn.btn-primary.btn-lg.d-flex.justify-content-center(type='button' style='font-size: 25px;font-weight: normal;')
-                        i.fa.fa-share-alt(style='margin-right: 15px;')
-                        span Share
-                    div(style='width: 4em;height: 2em;')
                     button.btn.btn-primary.btn-lg.d-flex.justify-content-center(value=file.urlShortCode onclick="copyText(this.value)" style='font-size: 25px;font-weight: normal;')
                         i.fa.fa-pencil(style='margin-right: 15px;')
                         span Download Link
