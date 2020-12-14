@@ -15,6 +15,7 @@ import cookieParser from "cookie-parser";
 
 //Custom Modules
 import Users from "./src/models/user";
+import shareFile from "./src/routes/shareFile";
 import UploadFile from "./src/models/uploadFile";
 import routes from "./src/routes/index";
 import uploadAPI from "./src/routes/uploadAPI";
@@ -101,6 +102,7 @@ app.use("/uploadAPI", verifyToken, uploadAPI);
 app.use("/signUpAPI", signUpAPI);
 app.use("/loginAPI", loginAPI);
 app.use("/upload", upload);
+app.use("/shareFile", shareFile);
 app.use("/about", about);
 app.use("/mainPage", mainPage);
 app.use("/availableFiles", availableFiles);

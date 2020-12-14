@@ -1,3 +1,10 @@
+script. 
+  function openForm(formID) {
+    document.getElementById(formID).style.display = "block";
+  }
+  function closeForm(formID) {
+    document.getElementById(formID).style.display = "none";
+  }
 .col(style='margin-top: 2%;margin-bottom: 2%;')
   section.d-flex.flex-column.flex-sm-row.flex-md-row.flex-lg-row.flex-xl-row
     form(method='POST' action='/upload' enctype='multipart/form-data')
@@ -31,9 +38,21 @@
                         i.fa.fa-remove(style='margin-right: 15px;')
                         span Delete
                     div(style='width: 4em;height: 2em;')
-                    button.btn.btn-primary.btn-lg.d-flex.justify-content-center(type='button' style='font-size: 25px;font-weight: normal;')
+                    button.btn.btn-primary.btn-lg.d-flex.justify-content-center(value=file.urlShortCode type='button' onclick="openForm(this.value)" style='font-size: 25px;font-weight: normal;')
                         i.fa.fa-share-alt(style='margin-right: 15px;')
                         span Share
+                    div( class="form-popup" id=file.urlShortCode)
+                      form(method='POST' action="/shareFile" class="form-container")
+                        h1 Share File
+
+                        <label for="email"><b>Email</b></label>
+                        <input type="text" placeholder="Enter Email" name="userEmail" required>
+                        input(type="hidden" name="fileHidden" value=file.urlShortCode)
+
+                        <button type="submit" class="btn">Share</button>
+                        <button type="button" class="btn cancel" onclick="closeForm(file.urlShortCode)">Close</button>
+                      </form>
+                    </div>
                     div(style='width: 4em;height: 2em;')
                     button.btn.btn-primary.btn-lg.d-flex.justify-content-center(value=file.urlShortCode onclick="copyText(this.value)" style='font-size: 25px;font-weight: normal;')
                         i.fa.fa-pencil(style='margin-right: 15px;')
@@ -42,3 +61,4 @@ script(src='/assets/js/helperFunctions.js')
 script(src='/assets/js/jquery.min.js')
 script(src='/assets/bootstrap/js/bootstrap.min.js')
 script(src='/assets/js/WOWSlider-about-us.js')
+link(rel="stylesheet", href="/assets/css/ShareFile.css")
