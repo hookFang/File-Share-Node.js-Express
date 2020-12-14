@@ -14,7 +14,7 @@ router.post("/", async (req, res) => {
     const fileDetails = await UploadFile.findDownloadFile(req.fileCode);
 
     if (req.userID == fileDetails.owner) {
-      await UploadFile.findOneAndUpdate({ urlShortCode: req.fileCode }, { $addToSet: { sharedWithUsers: req.emailID } }, { new: true, upsert: true });
+      await UploadFile.findOneAndUpdate({ urlShortCode: req.fileCode }, { $addToSet: { sharedWithUsers: req.emailID } });
     } else {
       return res.sendStatus(401);
     }
