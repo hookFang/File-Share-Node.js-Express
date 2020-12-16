@@ -5,7 +5,6 @@ import path from "path";
 import fs from "fs";
 import formidable from "formidable";
 import moment from "moment";
-import verifyToken from "./middleware";
 
 const router = Router();
 

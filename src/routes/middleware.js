@@ -15,6 +15,7 @@ export const verifyToken = async (req, res, next) => {
     const user = await Users.findOne({ email: payload.email });
     if (user) {
       req.userID = user._id;
+      req.email = user.email;
       console.log(user._id);
     }
     next();

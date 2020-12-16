@@ -118,6 +118,7 @@ app.use(
 );
 app.use(
   "/downloadAPI/:urlShortCode",
+  verifyToken,
   function (req, res, next) {
     req.shortCode = req.params.urlShortCode;
     next();
