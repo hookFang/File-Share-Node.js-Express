@@ -13,7 +13,7 @@ router.delete("/", async (req, res) => {
     return res.send("No file Exist");
   }
   if (fileDetails.owner) {
-    if (req.userID == fileDetails.owner) {
+    if (req.userID == fileDetails.owner || req.user.id == fileDetails.owner) {
       UploadFile.findOneAndDelete(
         { urlShortCode: req.shortCode },
         function (err, deletedFile) {
