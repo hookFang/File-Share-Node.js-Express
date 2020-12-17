@@ -1,8 +1,6 @@
 "use strict";
 import { Router } from "express";
-import Users from "../models/user";
 import UploadFile from "../models/uploadFile";
-import jwt from "jsonwebtoken";
 
 const router = Router();
 
