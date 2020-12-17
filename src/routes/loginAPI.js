@@ -9,8 +9,8 @@ const router = Router();
 /*POST for login*/
 //This will check if there is token, if not it will assign a token to the cookie
 router.post("/", async function (req, res) {
-  let email = req.body.email;
-  let password = req.body.password;
+  let email = await req.body.email;
+  let password = await req.body.password;
 
   var userValue = null;
 
@@ -20,10 +20,12 @@ router.post("/", async function (req, res) {
     },
     function (err, user) {
       if (err) {
+        console.log(err)
         res.sendStatus(401);
       }
 
       if (!user) {
+        console.log("Not a user")
         res.sendStatus(401);
       } else {
         //Compare hashed passwords
