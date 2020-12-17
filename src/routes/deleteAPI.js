@@ -9,11 +9,18 @@ const router = Router();
 router.delete("/", async (req, res) => {
   //Deletes the data from MongoDB
   const fileDetails = await UploadFile.findDownloadFile(req.shortCode);
+  let user = null;
+
+  if (req.user.id) {
+    user = await req.user.id;
+  }
+
   if (!fileDetails) {
     return res.send("No file Exist");
   }
+
   if (fileDetails.owner) {
-    if (req.userID == fileDetails.owner || req.user.id == fileDetails.owner) {
+    if (req.userID == fileDetails.owner || user == fileDetails.owner) {
       UploadFile.findOneAndDelete(
         { urlShortCode: req.shortCode },
         function (err, deletedFile) {
