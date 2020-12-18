@@ -11,12 +11,12 @@ router.delete("/", async (req, res) => {
   const fileDetails = await UploadFile.findDownloadFile(req.shortCode);
   let user = null;
 
-  if (req.user.id) {
+  if (req.user) {
     user = await req.user.id;
   }
 
   if (!fileDetails) {
-    return res.send("No file Exist");
+    res.send("No file Exist");
   }
 
   if (fileDetails.owner) {
