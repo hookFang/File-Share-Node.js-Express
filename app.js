@@ -12,7 +12,7 @@ import fs from "fs";
 import session from "express-session";
 import bcrypt from "bcryptjs";
 import cookieParser from "cookie-parser";
-
+import RateLimit from "express-rate-limit";
 //Custom Modules
 import Users from "./src/models/user";
 import shareFile from "./src/routes/shareFile";
@@ -86,6 +86,13 @@ const PORT = process.env.PORT;
 app.set("views", path.join(__dirname, "src/views"));
 app.set("view engine", "pug");
 
+//Rate limiter for number of requestes made
+var limiter = new RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 5,
+});
+// apply rate limiter to all requests
+app.use(limiter);
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

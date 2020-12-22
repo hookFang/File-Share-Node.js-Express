@@ -20,12 +20,12 @@ router.post("/", async function (req, res) {
     },
     function (err, user) {
       if (err) {
-        console.log(err)
+        console.log(err);
         res.sendStatus(401);
       }
 
       if (!user) {
-        console.log("Not a user")
+        console.log("Not a user");
         res.sendStatus(401);
       } else {
         //Compare hashed passwords
@@ -51,10 +51,14 @@ router.post("/", async function (req, res) {
   });
 
   if (userValue) {
-    Users.findByIdAndUpdate(userValue.id, { refreshToken: refreshToken }, function (err, model) {
-      if (err) console.log(err);
-      console.log("Token updated successfully to the database");
-    });
+    Users.findByIdAndUpdate(
+      userValue.id,
+      { refreshToken: refreshToken },
+      function (err, model) {
+        if (err) console.log(err);
+        console.log("Token updated successfully to the database");
+      }
+    );
     res.cookie("jwt", accessToken, { httpOnly: true });
     res.send({
       user: {

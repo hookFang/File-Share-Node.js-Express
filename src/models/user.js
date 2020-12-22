@@ -13,6 +13,10 @@ const UserSchema = new mongoose.Schema({
   refreshToken: {
     type: String,
   },
+  confirmedEmail: {
+    type: Boolean,
+    required: true,
+  },
 });
 //Create, instantiate and export model with schema
 const Users = mongoose.model("users", UserSchema);
