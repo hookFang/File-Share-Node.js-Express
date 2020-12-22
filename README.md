@@ -55,3 +55,4 @@ A Cron Job runs every minute to delete expired files and data from MongoDB. This
 
 ## Future plans
 Encrypt the uploaded files!
+Use CDN ot Amazon S3 storage to upload files
