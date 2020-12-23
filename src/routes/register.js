@@ -22,7 +22,7 @@ router.post("/", function (req, res) {
         password: hash,
       };
       //Check if user already exists
-      Users.find({ email: registerUser.email }, function (err, user) {
+      Users.find({ email: emailID }, function (err, user) {
         if (err) console.log(err);
         if (user.length) console.log("Username already exists please login.");
         const newUser = new Users(registerUser);
