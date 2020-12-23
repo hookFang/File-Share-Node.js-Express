@@ -19,13 +19,13 @@ router.post("/", async function (req, res) {
         { new: true, upsert: true }
       );
       var smtpTransport = nodemailer.createTransport({
-        host: "smtp.edwinchristie.tech",
+        host: process.env.NODEMAILER_HOST,
         ignoreTLS: true, // I had to ignore tls because there was a version mismatch
         port: 587,
         secure: false,
         auth: {
-          user: "info@edwinchristie.tech", // smptp server user
-          pass: "qF#mFT^0", // smptp server password
+          user: process.env.NODEMAILER_USER, // smptp server user
+          pass: process.env.NODEMAILER_PASSWORD, // smptp server password
         },
       });
       var mailOptions = {
