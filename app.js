@@ -101,7 +101,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // required for passport session
 app.use(
   session({
-    secret: "secrettexthere",
+    secret: process.env.SESSION_KEY,
     saveUninitialized: true,
     resave: true,
   })
