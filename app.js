@@ -89,7 +89,7 @@ app.set("view engine", "pug");
 //Rate limiter for number of requestes made
 var limiter = new RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 5,
+  max: 10,
 });
 // apply rate limiter to all requests
 app.use(limiter);
