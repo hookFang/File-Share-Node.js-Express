@@ -3,12 +3,10 @@
 This a file sharing API application, Users can upload a file and it creates a random URL which they can share. 
 It will allow anyone with this URL to download the uploaded file. No need to Sign Up, easy free file sharing service. 
 
-Link to Live Website: https://fileshareapp20.herokuapp.com/ (Testing still in progress not yet complete)
+Link to Live Website: https://fileshareapp20.herokuapp.com/
 
 ## Disclaimer
-Any copyright Files uploaded will the users responsibility.
-Currently the Main Page after Sign Up Only Supports uploading a file and displaying it. You can also copy the LINK for download.
-The EDIT and DELETE button aree still work in progress.
+Any copyright Files uploaded will be users responsibility.
 
 ## Share Files Privately 
 If the user Signs Up for an account, the person who needs to download the file should also sign up in order to access the file.
