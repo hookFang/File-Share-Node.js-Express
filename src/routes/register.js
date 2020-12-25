@@ -32,7 +32,7 @@ router.post("/", function (req, res) {
         const newUser = new Users(registerUser);
         newUser.save(async function (err) {
           if (err) console.log(err);
-          await sendVerificationEmail(emailID, req, token);
+          await sendVerificationEmail(emailID, token);
           res.render("emailVerification", { verification: 2 });
         });
       });
@@ -47,7 +47,7 @@ async function generateToken() {
   return buffer.toString("hex");
 }
 
-async function sendVerificationEmail(emailID, req, token) {
+async function sendVerificationEmail(emailID, token) {
   var smtpTransport = nodemailer.createTransport({
     host: process.env.NODEMAILER_HOST,
     ignoreTLS: true, // I had to ignore tls because there was a version mismatch
@@ -66,7 +66,7 @@ async function sendVerificationEmail(emailID, req, token) {
       "You are receiving this because you (or someone else) have signed up for a new account.\n\n" +
       "Please click on the following link, or paste this into your browser to complete the email Verification:\n\n" +
       "http://" +
-      req.headers.host +
+      process.env.EMAIL_HOSTNAME +
       "/emailVerification/" +
       token +
       "\n\n" +

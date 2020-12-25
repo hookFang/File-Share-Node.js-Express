@@ -8,12 +8,12 @@ const router = Router();
 /*POST for register*/
 router.post("/", function (req, res) {
   //compare password and confirm password
-  const emailID = registerUser.email;
+  const emailID = req.body.email,;
   if (req.body.password === req.body.confirmPassword) {
     //Insert user
     bcrypt.hash(req.body.password, 10, function (err, hash) {
       var registerUser = {
-        email: req.body.email,
+        email: emailID,
         password: hash,
       };
       //Check if user already exists
