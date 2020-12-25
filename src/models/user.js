@@ -5,6 +5,7 @@ const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -15,8 +16,10 @@ const UserSchema = new mongoose.Schema({
   },
   confirmedEmail: {
     type: Boolean,
-    required: true,
+    default: false,
   },
+  confirmPasswordToken: String,
+  confirmPasswordExpires: Date,
 });
 //Create, instantiate and export model with schema
 const Users = mongoose.model("users", UserSchema);

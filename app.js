@@ -33,6 +33,8 @@ import mainPage from "./src/routes/mainPage";
 import { refresh } from "./src/routes/authenticationHelper";
 import shareFileAPI from "./src/routes/shareFileAPI";
 import availableFiles from "./src/routes/availableFiles";
+import emailVerificationConfirm from "./src/routes/emailVerificationConfirm";
+import resendEmailVerification from "./src/routes/resendEmailVerification";
 
 //Connect to the Mongo databse
 try {
@@ -86,13 +88,6 @@ const PORT = process.env.PORT;
 app.set("views", path.join(__dirname, "src/views"));
 app.set("view engine", "pug");
 
-//Rate limiter for number of requestes made
-var limiter = new RateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 10,
-});
-// apply rate limiter to all requests
-app.use(limiter);
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -118,6 +113,7 @@ app.use("/shareFile", shareFile);
 app.use("/about", about);
 app.use("/mainPage", mainPage);
 app.use("/availableFiles", availableFiles);
+app.use("/resendEmailVerification", resendEmailVerification);
 app.use(
   "/shareFileAPI/:fileCode/:emailID",
   verifyToken,
@@ -156,6 +152,14 @@ app.use(
     next();
   },
   download
+);
+app.use(
+  "/emailVerification/:token",
+  function (req, res, next) {
+    req.token = req.params.token;
+    next();
+  },
+  emailVerificationConfirm
 );
 
 // app.get("/public/*", function (req, res, next) {
