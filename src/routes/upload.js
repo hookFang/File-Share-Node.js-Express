@@ -28,10 +28,12 @@ router.post("/", function (req, res) {
       }
     );
     console.log("Received upload");
-    //By default uploading through UI will have a expiry of 4 hours
-    canadaTime.add(4, "hours");
-
-    if (fields.userHidden) console.log(fields.userHidden);
+    //By default uploading through UI will have a expiry of 3 hours
+    if (fields.userHidden) {
+      canadaTime.add(48, "hours");
+    } else {
+      canadaTime.add(3, "hours");
+    }
 
     if (!fields.userHidden) {
       var fileDetails = new UploadFile({
