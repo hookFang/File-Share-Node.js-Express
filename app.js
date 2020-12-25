@@ -12,7 +12,7 @@ import fs from "fs";
 import session from "express-session";
 import bcrypt from "bcryptjs";
 import cookieParser from "cookie-parser";
-
+import RateLimit from "express-rate-limit";
 //Custom Modules
 import Users from "./src/models/user";
 import shareFile from "./src/routes/shareFile";
@@ -33,6 +33,8 @@ import mainPage from "./src/routes/mainPage";
 import { refresh } from "./src/routes/authenticationHelper";
 import shareFileAPI from "./src/routes/shareFileAPI";
 import availableFiles from "./src/routes/availableFiles";
+import emailVerificationConfirm from "./src/routes/emailVerificationConfirm";
+import resendEmailVerification from "./src/routes/resendEmailVerification";
 
 //Connect to the Mongo databse
 try {
@@ -94,7 +96,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // required for passport session
 app.use(
   session({
-    secret: "secrettexthere",
+    secret: process.env.SESSION_KEY,
     saveUninitialized: true,
     resave: true,
   })
@@ -111,6 +113,7 @@ app.use("/shareFile", shareFile);
 app.use("/about", about);
 app.use("/mainPage", mainPage);
 app.use("/availableFiles", availableFiles);
+app.use("/resendEmailVerification", resendEmailVerification);
 app.use(
   "/shareFileAPI/:fileCode/:emailID",
   verifyToken,
@@ -149,6 +152,14 @@ app.use(
     next();
   },
   download
+);
+app.use(
+  "/emailVerification/:token",
+  function (req, res, next) {
+    req.token = req.params.token;
+    next();
+  },
+  emailVerificationConfirm
 );
 
 // app.get("/public/*", function (req, res, next) {

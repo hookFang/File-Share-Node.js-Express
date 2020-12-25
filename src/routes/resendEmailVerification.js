@@ -1,46 +1,34 @@
-"use strict";
 import { Router } from "express";
 import Users from "../models/user";
-import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
 import sanitize from "mongo-sanitize";
 
 const router = Router();
-
-/*GET for register*/
 router.get("/", function (req, res) {
-  res.render("register");
+  res.render("resendEmailVerification");
 });
 
-/*POST for register*/
-router.post("/", function (req, res) {
-  //compare password and confirm password
+/*Resend Verification E-mail*/
+router.post("/", async function (req, res) {
   const emailID = sanitize(req.body.email);
-  if (req.body.password === req.body.confirmPassword) {
-    //Insert user
-    bcrypt.hash(req.body.password, 10, async function (err, hash) {
-      var token = await generateToken();
-      var registerUser = {
-        email: emailID,
-        password: hash,
-        confirmPasswordToken: token,
-        confirmPasswordExpires: Date.now() + 3600000,
-      };
-      Users.find({ email: emailID }, function (err, user) {
-        if (err) console.log(err);
-        if (user.length) console.log("Username already exists please login.");
-        const newUser = new Users(registerUser);
-        newUser.save(async function (err) {
-          if (err) console.log(err);
-          await sendVerificationEmail(emailID, token);
-          res.render("emailVerification", { verification: 2 });
-        });
-      });
-    });
-  } else {
-    return res.render("register", { wrongPassword: true });
-  }
+  var token = await generateToken();
+  Users.findOne({ email: emailID }, function (err, user) {
+    if (!user) {
+      return res.render("emailVerification", { verification: 5 });
+    } else {
+      if (user.confirmedEmail == true) {
+        res.render("emailVerification", { verification: 3 });
+      } else {
+        (user.confirmPasswordToken = token),
+          (user.confirmPasswordExpires = Date.now() + 3600000),
+          user.save(async function (err) {
+            await sendVerificationEmail(emailID, token);
+            res.render("emailVerification", { verification: 2 });
+          });
+      }
+    }
+  });
 });
 
 async function generateToken() {

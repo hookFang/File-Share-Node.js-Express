@@ -2,26 +2,26 @@
 import { Router } from "express";
 import Users from "../models/user";
 import bcrypt from "bcryptjs";
+import sanitize from "mongo-sanitize";
 
 const router = Router();
 
 /*POST for register*/
 router.post("/", function (req, res) {
   //compare password and confirm password
-  console.log(req.body.password);
-  console.log(req.body.email);
-
+  const emailID = sanitize(req.body.email);
   if (req.body.password === req.body.confirmPassword) {
     //Insert user
     bcrypt.hash(req.body.password, 10, function (err, hash) {
       var registerUser = {
-        email: req.body.email,
+        email: emailID,
         password: hash,
       };
       //Check if user already exists
-      Users.find({ email: registerUser.email }, function (err, user) {
+      Users.find({ email: emailID }, function (err, user) {
         if (err) return res.send(err);
-        if (user.length) return res.send("Username already exists please login.");
+        if (user.length)
+          return res.send("Username already exists please login.");
         const newUser = new Users(registerUser);
         newUser.save(function (err) {
           console.log("Adding User");
@@ -31,7 +31,9 @@ router.post("/", function (req, res) {
       });
     });
   } else {
-    return res.send("Passwords do not match, pleas make sure they are the same.");
+    return res.send(
+      "Passwords do not match, pleas make sure they are the same."
+    );
   }
 });
 

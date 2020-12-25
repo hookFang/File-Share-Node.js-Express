@@ -1,0 +1,10 @@
+.login-card(style="margin-top: 150px;background: #ffca42;")
+    p.profile-name-card(style="font-family: Bungee, cursive;") E-mail Verification
+    form.form-signin(method='POST' action='/resendEmailVerification')
+        span.reauth-email  
+        input#inputEmail.form-control(ID="email" name="email" type="email" required="" placeholder="Email address" autofocus="")
+        button.btn.btn-primary.btn-block.btn-lg.btn-signin(ID="buttonLogin" type="submit") Send Verification
+
+script(src="/assets/js/jquery.min.js")
+script(src="/assets/bootstrap/js/bootstrap.min.js")
+script(src="/assets/js/WOWSlider-about-us.js")

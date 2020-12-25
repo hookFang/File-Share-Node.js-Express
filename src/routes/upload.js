@@ -5,7 +5,6 @@ import path from "path";
 import fs from "fs";
 import formidable from "formidable";
 import moment from "moment";
-import { userInfo } from "os";
 
 const router = Router();
 
@@ -21,9 +20,13 @@ router.post("/", function (req, res) {
   form.parse(req, function (err, fields, files) {
     console.log(files.upload.name);
     //Upload file on our server
-    fs.rename(files.upload.path, path.join(form.uploadDir, files.upload.name), function (err) {
-      if (err) console.log(err);
-    });
+    fs.rename(
+      files.upload.path,
+      path.join(form.uploadDir, files.upload.name),
+      function (err) {
+        if (err) console.log(err);
+      }
+    );
     console.log("Received upload");
     //By default uploading through UI will have a expiry of 4 hours
     canadaTime.add(4, "hours");

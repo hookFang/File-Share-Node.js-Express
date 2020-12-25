@@ -1,0 +1,79 @@
+section.d-flex.d-lg-flex.flex-column.justify-content-center.align-items-lg-center(style="margin-top: 15em;")
+  h1(style="text-align: center;") File Share
+  case verification
+        when 0
+         p.text-break.text-center(style="text-align: center;font-family: ABeeZee, sans-serif;font-weight: bold;line-height: 30px;")
+            | Simply share you're file with anyone from the world !!   
+            br
+            | Easy and convenient.
+            br
+            |  Your E-mail has been verified ! Please Login.
+         section.text-center.d-flex.flex-column.justify-content-center.align-items-center.flex-md-row.flex-lg-row.flex-xl-row
+              a(href="/login")
+               button.btn.btn-primary.btn-lg.d-flex.justify-content-center(type="submit"  style="font-size: 25px;font-weight: normal;")
+                    i.fa.fa-download(style="margin-right: 15px;")
+                    span Login
+        when 1
+          p.text-break.text-center(style="text-align: center;font-family: ABeeZee, sans-serif;font-weight: bold;line-height: 30px;")
+            | Simply share you're file with anyone from the world !!   
+            br
+            | Easy and convenient.
+            br
+            |  Email Verification Token Invalid or has Expired
+          section.text-center.d-flex.flex-column.justify-content-center.align-items-center.flex-md-row.flex-lg-row.flex-xl-row
+              a(href="/resendEmailVerification")
+               button.btn.btn-primary.btn-lg.d-flex.justify-content-center(type="submit"  style="font-size: 25px;font-weight: normal;")
+                    i.fa.fa-download(style="margin-right: 15px;")
+                    span Resend Verification
+        when 2
+          p.text-break.text-center(style="text-align: center;font-family: ABeeZee, sans-serif;font-weight: bold;line-height: 30px;")
+            | Simply share you're file with anyone from the world !!   
+            br
+            | Easy and convenient.
+            br
+            |  Verification E-mail has been send ! Please Login.
+          section.text-center.d-flex.flex-column.justify-content-center.align-items-center.flex-md-row.flex-lg-row.flex-xl-row
+              a(href="/login")
+               button.btn.btn-primary.btn-lg.d-flex.justify-content-center(type="submit"  style="font-size: 25px;font-weight: normal;")
+                    i.fa.fa-download(style="margin-right: 15px;")
+                    span Login
+        when 3
+          p.text-break.text-center(style="text-align: center;font-family: ABeeZee, sans-serif;font-weight: bold;line-height: 30px;")
+            | Simply share you're file with anyone from the world !!   
+            br
+            | Easy and convenient.
+            br
+            |  E-mail already Verified ! Please Login
+          section.text-center.d-flex.flex-column.justify-content-center.align-items-center.flex-md-row.flex-lg-row.flex-xl-row
+              a(href="/login")
+               button.btn.btn-primary.btn-lg.d-flex.justify-content-center(type="submit"  style="font-size: 25px;font-weight: normal;")
+                    i.fa.fa-download(style="margin-right: 15px;")
+                    span Login
+        when 4
+          p.text-break.text-center(style="text-align: center;font-family: ABeeZee, sans-serif;font-weight: bold;line-height: 30px;")
+            | Simply share you're file with anyone from the world !!   
+            br
+            | Easy and convenient.
+            br
+            |  Please Verify your E-mail before logging in !
+          section.text-center.d-flex.flex-column.justify-content-center.align-items-center.flex-md-row.flex-lg-row.flex-xl-row
+              a(href="/resendEmailVerification")
+               button.btn.btn-primary.btn-lg.d-flex.justify-content-center(type="submit"  style="font-size: 25px;font-weight: normal;")
+                    i.fa.fa-download(style="margin-right: 15px;")
+                    span Resend Verification     
+        when 5
+          p.text-break.text-center(style="text-align: center;font-family: ABeeZee, sans-serif;font-weight: bold;line-height: 30px;")
+            | Simply share you're file with anyone from the world !!   
+            br
+            | Easy and convenient.
+            br
+            |  Inavlid E-mail ! Please Try again !
+          section.text-center.d-flex.flex-column.justify-content-center.align-items-center.flex-md-row.flex-lg-row.flex-xl-row
+              a(href="/resendEmailVerification")
+               button.btn.btn-primary.btn-lg.d-flex.justify-content-center(type="submit"  style="font-size: 25px;font-weight: normal;")
+                    i.fa.fa-download(style="margin-right: 15px;")
+                    span Resend Verification  
+
+script(src="/assets/js/jquery.min.js")
+script(src="/assets/bootstrap/js/bootstrap.min.js")
+script(src="/assets/js/WOWSlider-about-us.js")
