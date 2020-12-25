@@ -4,6 +4,7 @@ import Users from "../models/user";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
+import sanitize from "mongo-sanitize";
 
 const router = Router();
 
@@ -15,7 +16,7 @@ router.get("/", function (req, res) {
 /*POST for register*/
 router.post("/", function (req, res) {
   //compare password and confirm password
-  const emailID = req.body.email;
+  const emailID = sanitize(req.body.email);
   if (req.body.password === req.body.confirmPassword) {
     //Insert user
     bcrypt.hash(req.body.password, 10, async function (err, hash) {
@@ -61,7 +62,7 @@ async function sendVerificationEmail(emailID, token) {
   var mailOptions = {
     to: emailID,
     from: "<info@edwinchristie.tech>", // This is ignored by Gmail
-    subject: "A file has been shared with you",
+    subject: "Please Verify your E-mail",
     text:
       "You are receiving this because you (or someone else) have signed up for a new account.\n\n" +
       "Please click on the following link, or paste this into your browser to complete the email Verification:\n\n" +

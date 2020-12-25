@@ -1,8 +1,8 @@
 import { Router } from "express";
 import Users from "../models/user";
 import crypto from "crypto";
-import async from "async";
 import nodemailer from "nodemailer";
+import sanitize from "mongo-sanitize";
 
 const router = Router();
 router.get("/", function (req, res) {
@@ -11,11 +11,11 @@ router.get("/", function (req, res) {
 
 /*Resend Verification E-mail*/
 router.post("/", async function (req, res) {
-  const emailID = req.body.email;
+  const emailID = sanitize(req.body.email);
   var token = await generateToken();
   Users.findOne({ email: emailID }, function (err, user) {
     if (!user) {
-      return res.redirect("/resendEmailVerification");
+      return res.render("emailVerification", { verification: 5 });
     } else {
       if (user.confirmedEmail == true) {
         res.render("emailVerification", { verification: 3 });
@@ -50,7 +50,7 @@ async function sendVerificationEmail(emailID, token) {
   var mailOptions = {
     to: emailID,
     from: "<info@edwinchristie.tech>", // This is ignored by Gmail
-    subject: "A file has been shared with you",
+    subject: "Please Verify your E-mail",
     text:
       "You are receiving this because you (or someone else) have signed up for a new account.\n\n" +
       "Please click on the following link, or paste this into your browser to complete the email Verification:\n\n" +

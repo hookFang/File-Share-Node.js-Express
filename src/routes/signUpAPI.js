@@ -2,13 +2,14 @@
 import { Router } from "express";
 import Users from "../models/user";
 import bcrypt from "bcryptjs";
+import sanitize from "mongo-sanitize";
 
 const router = Router();
 
 /*POST for register*/
 router.post("/", function (req, res) {
   //compare password and confirm password
-  const emailID = req.body.email,;
+  const emailID = sanitize(req.body.email);
   if (req.body.password === req.body.confirmPassword) {
     //Insert user
     bcrypt.hash(req.body.password, 10, function (err, hash) {
