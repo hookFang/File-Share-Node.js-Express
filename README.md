@@ -1,4 +1,4 @@
-# File-API-Share-Project
+# File-API-Share-Project ![CodeQL](https://github.com/hookFang/File-Share-Node.js-Express/workflows/CodeQL/badge.svg?branch=master) ![Node.js CI](https://github.com/hookFang/File-Share-Node.js-Express/workflows/Node.js%20CI/badge.svg?branch=master)
 
 This a file sharing API application, Users can upload a file and it creates a random URL which they can share.
 It will allow anyone with this URL to download the uploaded file. No need to Sign Up, easy free file sharing service.
@@ -9,6 +9,15 @@ Link to Live Website: https://fileshareapp20.herokuapp.com/
 
 Any copyright Files uploaded will be users responsibility.
 
+## Run Project Locally
+```sh
+# Please make sure to update the .env file before starting the project
+# Execute the project using nodemon
+npm run dev
+
+#Excute the project without nodemon
+npm run start
+```
 ## Share Files Privately
 
 If the user Signs Up for an account, the person who needs to download the file should also sign up in order to access the file.
