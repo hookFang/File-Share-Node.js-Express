@@ -24,12 +24,15 @@ router.post("/", function (req, res) {
       var registerUser = {
         email: emailID,
         password: hash,
-        confirmPasswordToken: token,
-        confirmPasswordExpires: Date.now() + 3600000,
+        confirmEmailToken: token,
+        confirmEmailExpires: Date.now() + 3600000,
       };
       Users.find({ email: emailID }, function (err, user) {
         if (err) console.log(err);
-        if (user.length) console.log("Username already exists please login.");
+        if (user.length) {
+          console.log("Username already exists please login.");
+          return res.render("register", { registerError: 1 });
+        }
         const newUser = new Users(registerUser);
         newUser.save(async function (err) {
           if (err) console.log(err);
@@ -39,7 +42,7 @@ router.post("/", function (req, res) {
       });
     });
   } else {
-    return res.render("register", { wrongPassword: true });
+    return res.render("register", { registerError: 0 });
   }
 });
 

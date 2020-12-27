@@ -5,28 +5,24 @@ import nodemailer from "nodemailer";
 import sanitize from "mongo-sanitize";
 
 const router = Router();
+
 router.get("/", function (req, res) {
-  res.render("resendEmailVerification");
+  res.render("resetPassword");
 });
 
-/*Resend Verification E-mail*/
 router.post("/", async function (req, res) {
   const emailID = sanitize(req.body.email);
   var token = await generateToken();
   Users.findOne({ email: emailID }, function (err, user) {
     if (!user) {
-      return res.render("emailVerification", { verification: 5 });
+      return res.render("resetPassword", { verification: 0 });
     } else {
-      if (user.confirmedEmail == true) {
-        res.render("emailVerification", { verification: 3 });
-      } else {
-        (user.confirmEmailToken = token),
-          (user.confirmEmailExpires = Date.now() + 3600000),
-          user.save(async function (err) {
-            await sendVerificationEmail(emailID, token);
-            res.render("emailVerification", { verification: 2 });
-          });
-      }
+      (user.resetPasswordToken = token),
+        (user.resetPasswordExpires = Date.now() + 3600000),
+        user.save(async function (err) {
+          await sendVerificationEmail(emailID, token);
+          res.render("resetPassword", { verification: 1 });
+        });
     }
   });
 });
@@ -50,13 +46,13 @@ async function sendVerificationEmail(emailID, token) {
   var mailOptions = {
     to: emailID,
     from: "<info@edwinchristie.tech>", // This is ignored by Gmail
-    subject: "Please Verify your E-mail",
+    subject: "Password Reset File Share",
     text:
-      "You are receiving this because you (or someone else) have signed up for a new account.\n\n" +
-      "Please click on the following link, or paste this into your browser to complete the email Verification:\n\n" +
+      "You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n" +
+      "Please click on the following link, or paste this into your browser to complete the process:\n\n" +
       "http://" +
       process.env.EMAIL_HOSTNAME +
-      "/emailVerification/" +
+      "/resetPasswordConfirm/" +
       token +
       "\n\n" +
       "If you did not request this, please ignore this email .\n",
