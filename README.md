@@ -1,4 +1,6 @@
-# File-API-Share-Project ![CodeQL](https://github.com/hookFang/File-Share-Node.js-Express/workflows/CodeQL/badge.svg?branch=master) ![Node.js CI](https://github.com/hookFang/File-Share-Node.js-Express/workflows/Node.js%20CI/badge.svg?branch=master)
+# File-API-Share-Project 
+![CodeQL](https://github.com/hookFang/File-Share-Node.js-Express/workflows/CodeQL/badge.svg?branch=master) ![Node.js CI](https://github.com/hookFang/File-Share-Node.js-Express/workflows/Node.js%20CI/badge.svg?branch=master) ![RepoSize](https://img.shields.io/github/repo-size/hookFang/File-Share-Node.js-Express?label=Repo%20Size&style=plastic) [![WebsiteStatus](https://img.shields.io/website?down_color=red&label=Website%20Status&logo=website&style=plastic&up_color=light%20green&url=https%3A%2F%2Ffileshareapp20.herokuapp.com%2F)](https://fileshareapp20.herokuapp.com/)
+
 
 This a file sharing API application, Users can upload a file and it creates a random URL which they can share.
 It will allow anyone with this URL to download the uploaded file. No need to Sign Up, easy free file sharing service.
