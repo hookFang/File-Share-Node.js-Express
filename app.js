@@ -13,6 +13,7 @@ import session from "express-session";
 import bcrypt from "bcryptjs";
 import cookieParser from "cookie-parser";
 import RateLimit from "express-rate-limit";
+
 //Custom Modules
 import Users from "./src/models/user";
 import shareFile from "./src/routes/shareFile";
@@ -35,6 +36,8 @@ import shareFileAPI from "./src/routes/shareFileAPI";
 import availableFiles from "./src/routes/availableFiles";
 import emailVerificationConfirm from "./src/routes/emailVerificationConfirm";
 import resendEmailVerification from "./src/routes/resendEmailVerification";
+import resetPassword from "./src/routes/resetPassword";
+import resetPasswordConfirm from "./src/routes/resetPasswordConfirm";
 
 //Connect to the Mongo databse
 try {
@@ -113,6 +116,7 @@ app.use("/shareFile", shareFile);
 app.use("/about", about);
 app.use("/mainPage", mainPage);
 app.use("/availableFiles", availableFiles);
+app.use("/resetPassword", resetPassword);
 app.use("/resendEmailVerification", resendEmailVerification);
 app.use(
   "/shareFileAPI/:fileCode/:emailID",
@@ -160,6 +164,14 @@ app.use(
     next();
   },
   emailVerificationConfirm
+);
+app.use(
+  "/resetPasswordConfirm/:token",
+  function (req, res, next) {
+    req.token = req.params.token;
+    next();
+  },
+  resetPasswordConfirm
 );
 
 // app.get("/public/*", function (req, res, next) {

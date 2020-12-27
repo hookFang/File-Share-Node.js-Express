@@ -6,8 +6,8 @@ const router = Router();
 router.get("/", function (req, res) {
   Users.findOne(
     {
-      confirmPasswordToken: req.token,
-      confirmPasswordExpires: { $gt: Date.now() },
+      confirmEmailToken: req.token,
+      confirmEmailExpires: { $gt: Date.now() },
     },
     function (err, user) {
       if (!user) {
@@ -15,8 +15,8 @@ router.get("/", function (req, res) {
         return res.render("emailVerification", { verification: 1 });
       } else {
         //if the token and date is valid the user is updated
-        user.confirmPasswordToken = undefined;
-        user.confirmPasswordExpires = undefined;
+        user.confirmEmailToken = undefined;
+        user.confirmEmailExpires = undefined;
         user.confirmedEmail = true;
         user.save(function (err) {
           if (err) console.log(err);

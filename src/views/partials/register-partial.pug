@@ -6,9 +6,13 @@
         input#inputPassword.form-control(ID="password" name="password" type="password" required="" placeholder="Password")
         input#inputPassword-1.form-control(ID="confirmPassword" name="confirmPassword" type="password" required="" placeholder="Confirm Password")
         button.btn.btn-primary.btn-block.btn-lg.btn-signin(ID="signupButton" type="submit") Sign Up
-        if(wrongPassword)
-            p.isDanger
-                | Passwords don't match ! Please try again.
+        case registerError
+            when 0
+                p.isDanger
+                    | Passwords don't match ! Please try again.
+            when 1
+                p
+                    | Account already Exist ! Please Login.       
 
 script(src="/assets/js/jquery.min.js")
 script(src="/assets/bootstrap/js/bootstrap.min.js")
