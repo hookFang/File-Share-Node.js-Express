@@ -18,8 +18,10 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  confirmPasswordToken: String,
-  confirmPasswordExpires: Date,
+  confirmEmailToken: String,
+  confirmEmailExpires: Date,
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
 });
 //Create, instantiate and export model with schema
 const Users = mongoose.model("users", UserSchema);
