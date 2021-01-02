@@ -15,16 +15,22 @@ section.d-flex.d-lg-flex.flex-column.justify-content-center.align-items-lg-cente
             br 
             | #{shareLink}
 section.text-center.d-flex.flex-column.justify-content-center.align-items-center.flex-md-row.flex-lg-row.flex-xl-row
-  form(method='POST' action='/upload' enctype='multipart/form-data')
-    input.d-none(type="file" onchange="this.form.submit()" id="selectedFile" name="upload")
-    button.btn.btn-primary.btn-lg.d-flex.justify-content-center(type="button" onclick="document.getElementById('selectedFile').click();" style="font-size: 25px;font-weight: normal;")
-          i.fa.fa-upload(style="margin-right: 15px;")
-          span Upload
+  input#upload-input.d-none(type="file" name='uploads[]' multiple='multiple')
+  button.btn.btn-primary.btn-lg.d-flex.justify-content-center(type="button" id="upload-btn" style="font-size: 25px;font-weight: normal;")
+        i.fa.fa-upload(style="margin-right: 15px;")
+        span Upload  
   div(style="height: 40px;width: 20%;")
   a.btn.btn-primary.btn-lg.d-flex(role="button" style="font-weight: normal;height: 55px;font-size: 25px;" href="/register")
     i.fa.fa-user(style="margin-right: 15px;")
     span Sign Up
+div(style='padding-top: 3%;' id="progressBarDiv")
+  .container
+    .row
+      .col-md-12
+        .progress
+          .progress-bar(role='progressbar' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100' style='width: 0%;')
 
 script(src="/assets/js/jquery.min.js")
 script(src="/assets/bootstrap/js/bootstrap.min.js")
 script(src="/assets/js/WOWSlider-about-us.js")
+script(src='../assets/js/upload.js')

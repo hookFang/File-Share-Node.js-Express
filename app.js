@@ -12,7 +12,6 @@ import fs from "fs";
 import session from "express-session";
 import bcrypt from "bcryptjs";
 import cookieParser from "cookie-parser";
-import RateLimit from "express-rate-limit";
 
 //Custom Modules
 import Users from "./src/models/user";
@@ -23,6 +22,7 @@ import uploadAPI from "./src/routes/uploadAPI";
 import downloadAPI from "./src/routes/downloadAPI";
 import signUpAPI from "./src/routes/signUpAPI";
 import loginAPI from "./src/routes/loginAPI";
+import finishedUpload from "./src/routes/finishedUpload";
 import deleteFile from "./src/routes/deleteAPI";
 import download from "./src/routes/download";
 import upload from "./src/routes/upload";
@@ -118,6 +118,14 @@ app.use("/mainPage", mainPage);
 app.use("/availableFiles", availableFiles);
 app.use("/resetPassword", resetPassword);
 app.use("/resendEmailVerification", resendEmailVerification);
+app.use(
+  "/finishedUpload/:shortCode",
+  function (req, res, next) {
+    req.shortCode = req.params.shortCode;
+    next();
+  },
+  finishedUpload
+);
 app.use(
   "/shareFileAPI/:fileCode/:emailID",
   verifyToken,

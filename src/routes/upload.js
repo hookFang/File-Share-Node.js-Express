@@ -20,9 +20,9 @@ router.post("/", function (req, res) {
     fs.mkdirSync(dir);
   }
 
-  form.parse(req, function (err, fields, files) {
-    var myReadStream = fs.createReadStream(files.upload.path);
-    var myWriteStream = fs.createWriteStream(path.join(dir, files.upload.name));
+  form.on("file", function (fields, files) {
+    var myReadStream = fs.createReadStream(files.path);
+    var myWriteStream = fs.createWriteStream(path.join(dir, files.name));
 
     myReadStream.pipe(myWriteStream);
 
@@ -37,13 +37,13 @@ router.post("/", function (req, res) {
 
       if (!fields.userHidden) {
         var fileDetails = new UploadFile({
-          fileName: files.upload.name,
+          fileName: files.name,
           urlShortCode: nanoid(),
           urlExpiry: canadaTime.format(),
         });
       } else {
         var fileDetails = new UploadFile({
-          fileName: files.upload.name,
+          fileName: files.name,
           owner: fields.userHidden,
           urlShortCode: nanoid(),
           urlExpiry: canadaTime.format(),
@@ -55,16 +55,20 @@ router.post("/", function (req, res) {
         let shareLink =
           req.get("host") + "/download/" + fileDetails.urlShortCode;
         if (!fields.userHidden) {
-          res.render("index", { fileSaved: true, shareLink: shareLink });
+          res.send(fileDetails.urlShortCode);
         } else {
-          res.redirect("/mainPage");
+          res.send(true);
         }
       });
     });
-    form.on("end", function (err, fields, files) {
-      console.log("File successfuly uploaded, and Data added to Mongo DB");
-    });
   });
+
+  form.on("end", function () {
+    console.log("File successfuly uploaded, and Data added to Mongo DB");
+  });
+
+  // parse the incoming request containing the form data
+  form.parse(req);
 });
 
 module.exports = router;
