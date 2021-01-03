@@ -14,26 +14,32 @@ router.post("/", async function (req, res) {
   const fileDetails = await UploadFile.findDownloadFile(req.shortCode);
   if (fileDetails) {
     if (!fileDetails.owner) {
-      const file = path.join(__dirname, "../../public/files/" + fileDetails.fileName);
+      const file = path.join(
+        __dirname,
+        "../../public/files/" + fileDetails.fileName
+      );
       res.download(file);
     } else {
       //Check if the user who requested the file is a valid user and then allows the user to download
       let isValidUser = false;
-      if (req.user.id == fileDetails.owner) {
-        isValidUser = true;
-      }
-      if (req.user.email) {
-        for (let users of fileDetails.sharedWithUsers) {
-          if (req.user.email == users) {
-            isValidUser = true;
+      if (req.user) {
+        if (req.user.id == fileDetails.owner) {
+          isValidUser = true;
+        }
+        if (req.user.email) {
+          for (let users of fileDetails.sharedWithUsers) {
+            if (req.user.email == users) {
+              isValidUser = true;
+            }
           }
         }
       }
-      console.log(isValidUser);
-
       //If valis user file starts downloading
       if (isValidUser) {
-        const file = path.join(__dirname, "../../public/files/" + fileDetails.fileName);
+        const file = path.join(
+          __dirname,
+          "../../public/files/" + fileDetails.fileName
+        );
         return res.download(file);
       } else {
         res.redirect("/login");
