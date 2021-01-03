@@ -3,6 +3,7 @@
 
 
 This a file sharing API application, Users can upload a file and it creates a random URL which they can share.
+The current version supports file upload upto 3GB. 
 It will allow anyone with this URL to download the uploaded file. No need to Sign Up, easy free file sharing service.
 
 Link to Live Website: https://fileshareapp20.herokuapp.com/
