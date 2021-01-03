@@ -1,11 +1,11 @@
 //Code reffered from https://medium.com/@sophiesophie/node-js-tutorials-building-a-file-uploader-with-node-js-2808cac30a31
 $("#upload-btn").on("click", function () {
   $("#upload-input").click();
-  $("#progressBarDiv").display("flex");
   $(".progress-bar").text("0%");
   $(".progress-bar").width("0%");
 });
 $("#upload-input").on("change", function () {
+  $("#progressBarDiv").css("display", "flex");
   var files = $(this).get(0).files;
   if (files.length > 0) {
     // create a FormData object which will be sent as the data payload in the

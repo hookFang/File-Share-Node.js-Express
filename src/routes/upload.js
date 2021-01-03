@@ -20,7 +20,7 @@ router.post("/", function (req, res) {
     fs.mkdirSync(dir);
   }
 
-  form.on("file", function (fields, files) {
+  form.on("file", async function (fields, files) {
     var myReadStream = fs.createReadStream(files.path);
     var myWriteStream = fs.createWriteStream(path.join(dir, files.name));
 
@@ -29,13 +29,13 @@ router.post("/", function (req, res) {
     myWriteStream.on("finish", function () {
       console.log("Received upload");
       //By default uploading through UI will have a expiry of 3 hours
-      if (fields.userHidden) {
+      if (req.user) {
         canadaTime.add(48, "hours");
       } else {
         canadaTime.add(3, "hours");
       }
 
-      if (!fields.userHidden) {
+      if (!req.user) {
         var fileDetails = new UploadFile({
           fileName: files.name,
           urlShortCode: nanoid(),
@@ -44,7 +44,7 @@ router.post("/", function (req, res) {
       } else {
         var fileDetails = new UploadFile({
           fileName: files.name,
-          owner: fields.userHidden,
+          owner: req.user.id,
           urlShortCode: nanoid(),
           urlExpiry: canadaTime.format(),
         });
@@ -54,7 +54,7 @@ router.post("/", function (req, res) {
         if (err) console.log(err);
         let shareLink =
           req.get("host") + "/download/" + fileDetails.urlShortCode;
-        if (!fields.userHidden) {
+        if (!req.user) {
           res.send(fileDetails.urlShortCode);
         } else {
           res.send(true);
