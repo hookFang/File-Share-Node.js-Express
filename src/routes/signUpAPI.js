@@ -1,10 +1,9 @@
 "use strict";
-import { Router } from "express";
-import Users from "../models/user";
-import bcrypt from "bcryptjs";
-import sanitize from "mongo-sanitize";
-
-const router = Router();
+var express = require("express");
+var router = express.Router();
+var Users = require("../models/user");
+var bcrypt = require("bcryptjs");
+var sanitize = require("mongo-sanitize");
 
 /*POST for register*/
 router.post("/", function (req, res) {

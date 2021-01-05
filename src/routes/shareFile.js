@@ -1,8 +1,7 @@
-import { Router } from "express";
-import UploadFile from "../models/uploadFile";
-import nodemailer from "nodemailer";
-
-const router = Router();
+var express = require("express");
+var router = express.Router();
+var UploadFile = require("../models/uploadFile");
+var nodemailer = require("nodemailer");
 
 router.post("/", async function (req, res) {
   if (req.body.urlShortCodeID) {

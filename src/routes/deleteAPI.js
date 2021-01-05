@@ -1,9 +1,8 @@
-import { Router } from "express";
-import UploadFile from "../models/uploadFile";
-import fs from "fs";
-import path from "path";
-
-const router = Router();
+var express = require("express");
+var router = express.Router();
+var UploadFile = require("../models/uploadFile");
+var fs = require("fs");
+var path = require("path");
 
 //DELETE method
 router.delete("/", async (req, res) => {
@@ -57,4 +56,4 @@ router.delete("/", async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

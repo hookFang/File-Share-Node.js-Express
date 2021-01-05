@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import timeZone from "mongoose-timezone";
+var mongoose = require("mongoose");
+var timeZone = require("mongoose-timezone");
 
 //Create a schema, basically a table in sql
 const uploadFileSchema = new mongoose.Schema(
@@ -37,4 +37,4 @@ uploadFileSchema.plugin(timeZone, { paths: ["date", "subDocument.subDate"] });
 //Create and instantiate model with schema
 const UploadFile = mongoose.model("uploadFiles", uploadFileSchema);
 
-export default UploadFile;
+module.exports = UploadFile;

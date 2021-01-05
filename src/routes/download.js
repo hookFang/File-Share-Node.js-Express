@@ -1,8 +1,7 @@
-import { Router } from "express";
-import UploadFile from "../models/uploadFile";
-import path from "path";
-
-const router = Router();
+var express = require("express");
+var router = express.Router();
+var UploadFile = require("../models/uploadFile");
+var path = require("path");
 
 //GET method
 router.get("/", function (req, res) {
@@ -42,10 +41,10 @@ router.post("/", async function (req, res) {
         );
         return res.download(file);
       } else {
-        res.redirect("/login");
+        return res.render("login", { requiresLogin: true });
       }
     }
   }
 });
 
-export default router;
+module.exports = router;

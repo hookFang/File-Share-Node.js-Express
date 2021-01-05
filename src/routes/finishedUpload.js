@@ -1,6 +1,5 @@
-import { Router } from "express";
-
-const router = Router();
+var express = require("express");
+var router = express.Router();
 
 router.get("/", function (req, res) {
   var shareLink = process.env.EMAIL_HOSTNAME + "/download/" + req.shortCode;

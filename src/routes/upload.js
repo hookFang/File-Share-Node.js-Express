@@ -1,12 +1,11 @@
-import { Router } from "express";
-import { nanoid } from "nanoid";
-import UploadFile from "../models/uploadFile";
-import path from "path";
-import fs from "fs";
-import formidable from "formidable";
-import moment from "moment";
-
-const router = Router();
+var express = require("express");
+var router = express.Router();
+var nanoid = require("nanoid").nanoid;
+var UploadFile = require("../models/uploadFile");
+var path = require("path");
+var fs = require("fs");
+var formidable = require("formidable");
+var moment = require("moment");
 
 /*POST for the Upload button in the index page*/
 router.post("/", function (req, res) {

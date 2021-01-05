@@ -1,10 +1,9 @@
-import { Router } from "express";
-import Users from "../models/user";
-import crypto from "crypto";
-import nodemailer from "nodemailer";
-import sanitize from "mongo-sanitize";
-
-const router = Router();
+var express = require("express");
+var router = express.Router();
+var Users = require("../models/user");
+var crypto = require("crypto");
+var nodemailer = require("nodemailer");
+var sanitize = require("mongo-sanitize");
 
 router.get("/", function (req, res) {
   res.render("resetPassword");

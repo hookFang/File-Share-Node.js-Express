@@ -1,7 +1,7 @@
-import { Router } from "express";
-import Users from "../models/user";
+var express = require("express");
+var router = express.Router();
+var Users = require("../models/user");
 
-const router = Router();
 /*Confirm Email is verified*/
 router.get("/", function (req, res) {
   Users.findOne(

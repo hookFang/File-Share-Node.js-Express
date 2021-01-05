@@ -1,8 +1,7 @@
 "use strict";
-import { Router } from "express";
-import passport from "passport";
-
-const router = Router();
+var express = require("express");
+var router = express.Router();
+var passport = require("passport");
 
 /*GET for login*/
 router.get("/", function (req, res) {

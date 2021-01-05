@@ -9,6 +9,9 @@
         if(falsePasswordValidation)
             p.isDanger
                 | The email or password is incorrect !
+        if(requiresLogin)
+            p.isDanger
+                | This File is private. Please login to download it.
 
 script(src="/assets/js/jquery.min.js")
 script(src="/assets/bootstrap/js/bootstrap.min.js")

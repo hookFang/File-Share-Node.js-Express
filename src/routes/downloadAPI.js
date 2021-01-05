@@ -1,15 +1,17 @@
-import { Router } from "express";
-import UploadFile from "../models/uploadFile";
-import path from "path";
-
-const router = Router();
+var express = require("express");
+var router = express.Router();
+var UploadFile = require("../models/uploadFile");
+var path = require("path");
 
 //GET method
 router.get("/", async (req, res) => {
   const fileDetails = await UploadFile.findDownloadFile(req.shortCode);
   if (fileDetails) {
     if (!fileDetails.owner) {
-      const file = path.join(__dirname, "../../public/files/" + fileDetails.fileName);
+      const file = path.join(
+        __dirname,
+        "../../public/files/" + fileDetails.fileName
+      );
       res.download(file);
     } else {
       let isValidUser = false;
@@ -25,7 +27,10 @@ router.get("/", async (req, res) => {
       }
 
       if (isValidUser) {
-        const file = path.join(__dirname, "../../public/files/" + fileDetails.fileName);
+        const file = path.join(
+          __dirname,
+          "../../public/files/" + fileDetails.fileName
+        );
         res.download(file);
       } else {
         res.sendStatus(403);
@@ -36,4 +41,4 @@ router.get("/", async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

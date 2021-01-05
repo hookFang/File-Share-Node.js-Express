@@ -1,43 +1,43 @@
-import "dotenv/config";
-import express from "express";
-import passport from "passport";
-import { Strategy } from "passport-local";
-import bodyParser from "body-parser";
-import cors from "cors";
-import mongoose from "mongoose";
-import { CronJob } from "cron";
-import moment from "moment";
-import path from "path";
-import fs from "fs";
-import session from "express-session";
-import bcrypt from "bcryptjs";
-import cookieParser from "cookie-parser";
+var dotenv = require("dotenv/config");
+var express = require("express");
+var passport = require("passport");
+var LocalStrategy = require("passport-local").Strategy;
+var bodyParser = require("body-parser");
+var cors = require("cors");
+var mongoose = require("mongoose");
+var CronJob = require("cron").CronJob;
+var moment = require("moment");
+var path = require("path");
+var fs = require("fs");
+var session = require("express-session");
+var bcrypt = require("bcryptjs");
+var cookieParser = require("cookie-parser");
 
 //Custom Modules
-import Users from "./src/models/user";
-import shareFile from "./src/routes/shareFile";
-import UploadFile from "./src/models/uploadFile";
-import routes from "./src/routes/index";
-import uploadAPI from "./src/routes/uploadAPI";
-import downloadAPI from "./src/routes/downloadAPI";
-import signUpAPI from "./src/routes/signUpAPI";
-import loginAPI from "./src/routes/loginAPI";
-import finishedUpload from "./src/routes/finishedUpload";
-import deleteFile from "./src/routes/deleteAPI";
-import download from "./src/routes/download";
-import upload from "./src/routes/upload";
-import login from "./src/routes/login";
-import about from "./src/routes/about";
-import register from "./src/routes/register";
-import { verifyToken } from "./src/routes/middleware";
-import mainPage from "./src/routes/mainPage";
-import { refresh } from "./src/routes/authenticationHelper";
-import shareFileAPI from "./src/routes/shareFileAPI";
-import availableFiles from "./src/routes/availableFiles";
-import emailVerificationConfirm from "./src/routes/emailVerificationConfirm";
-import resendEmailVerification from "./src/routes/resendEmailVerification";
-import resetPassword from "./src/routes/resetPassword";
-import resetPasswordConfirm from "./src/routes/resetPasswordConfirm";
+var Users = require("./src/models/user");
+var shareFile = require("./src/routes/shareFile");
+var UploadFile = require("./src/models/uploadFile");
+var routes = require("./src/routes/index");
+var uploadAPI = require("./src/routes/uploadAPI");
+var downloadAPI = require("./src/routes/downloadAPI");
+var signUpAPI = require("./src/routes/signUpAPI");
+var loginAPI = require("./src/routes/loginAPI");
+var finishedUpload = require("./src/routes/finishedUpload");
+var deleteFile = require("./src/routes/deleteAPI");
+var download = require("./src/routes/download");
+var upload = require("./src/routes/upload");
+var login = require("./src/routes/login");
+var about = require("./src/routes/about");
+var register = require("./src/routes/register");
+var verifyToken = require("./src/routes/middleware").verifyToken;
+var mainPage = require("./src/routes/mainPage");
+var refresh = require("./src/routes/authenticationHelper").refresh;
+var shareFileAPI = require("./src/routes/shareFileAPI");
+var availableFiles = require("./src/routes/availableFiles");
+var emailVerificationConfirm = require("./src/routes/emailVerificationConfirm");
+var resendEmailVerification = require("./src/routes/resendEmailVerification");
+var resetPassword = require("./src/routes/resetPassword");
+var resetPasswordConfirm = require("./src/routes/resetPasswordConfirm");
 
 //Connect to the Mongo databse
 try {
@@ -95,7 +95,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 // required for passport session
 app.use(
   session({
@@ -182,9 +182,13 @@ app.use(
   resetPasswordConfirm
 );
 
-// app.get("/public/*", function (req, res, next) {
-//   res.end("You are not allowed!");
-// });
+//Removes access to all the download files
+app.all("/files/*", function (req, res, next) {
+  res.status(403).send({
+    message: "Access Forbidden",
+  });
+});
+app.use("/files", express.static(path.join(__dirname, "files")));
 
 //Serialize user
 passport.serializeUser(function (user, done) {
@@ -200,7 +204,7 @@ passport.deserializeUser(function (id, done) {
 
 //Local strategy used for logging users
 passport.use(
-  new Strategy(function (username, password, done) {
+  new LocalStrategy(function (username, password, done) {
     Users.findOne(
       {
         email: username,

@@ -1,8 +1,7 @@
 "use strict";
-import { Router } from "express";
-import UploadFile from "../models/uploadFile";
-
-const router = Router();
+var express = require("express");
+var router = express.Router();
+var UploadFile = require("../models/uploadFile");
 
 router.post("/", async (req, res) => {
   if (req.userID) {
@@ -12,7 +11,10 @@ router.post("/", async (req, res) => {
     const fileDetails = await UploadFile.findDownloadFile(req.fileCode);
 
     if (req.userID == fileDetails.owner) {
-      await UploadFile.findOneAndUpdate({ urlShortCode: req.fileCode }, { $addToSet: { sharedWithUsers: req.emailID } });
+      await UploadFile.findOneAndUpdate(
+        { urlShortCode: req.fileCode },
+        { $addToSet: { sharedWithUsers: req.emailID } }
+      );
     } else {
       return res.sendStatus(401);
     }

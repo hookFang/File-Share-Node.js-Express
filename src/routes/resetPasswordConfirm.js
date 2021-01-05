@@ -1,8 +1,8 @@
-import { Router } from "express";
-import Users from "../models/user";
-import bcrypt from "bcryptjs";
+var express = require("express");
+var router = express.Router();
+var Users = require("../models/user");
+var bcrypt = require("bcryptjs");
 
-const router = Router();
 /* Reset Password GET action */
 router.get("/", function (req, res) {
   Users.findOne(

@@ -1,12 +1,11 @@
-import { Router, text } from "express";
-import { nanoid } from "nanoid";
-import UploadFile from "../models/uploadFile";
-import path from "path";
-import fs from "fs";
-import formidable from "formidable";
-import moment from "moment";
-
-const router = Router();
+var express = require("express");
+var router = express.Router();
+var nanoid = require("nanoid").nanoid;
+var UploadFile = require("../models/uploadFile");
+var path = require("path");
+var fs = require("fs");
+var formidable = require("formidable");
+var moment = require("moment");
 
 //POST method
 router.post("/", async (req, res) => {
@@ -19,9 +18,13 @@ router.post("/", async (req, res) => {
     //files.upload.name = fields.title + '.' + files.upload.name.split('.')[1];
     console.log(files.upload.name);
     //Upload file on our server
-    fs.rename(files.upload.path, path.join(form.uploadDir, files.upload.name), function (err) {
-      if (err) console.log(err);
-    });
+    fs.rename(
+      files.upload.path,
+      path.join(form.uploadDir, files.upload.name),
+      function (err) {
+        if (err) console.log(err);
+      }
+    );
     console.log("Received upload");
 
     //Check if URLEXPIRY field is filled in or sets a default value with 1 hour
@@ -64,4 +67,4 @@ router.post("/", async (req, res) => {
   });
 });
 
-export default router;
+module.exports = router;

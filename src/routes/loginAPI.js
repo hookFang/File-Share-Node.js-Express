@@ -1,10 +1,9 @@
 "use strict";
-import { Router } from "express";
-import Users from "../models/user";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-
-const router = Router();
+var express = require("express");
+var router = express.Router();
+var Users = require("../models/user");
+var bcrypt = require("bcryptjs");
+var jwt = require("jsonwebtoken");
 
 /*POST for login*/
 //This will check if there is token, if not it will assign a token to the cookie

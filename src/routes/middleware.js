@@ -1,7 +1,7 @@
-import jwt from "jsonwebtoken";
-import Users from "../models/user";
+var Users = require("../models/user");
+var jwt = require("jsonwebtoken");
 
-export const verifyToken = async (req, res, next) => {
+module.exports.verifyToken = async (req, res, next) => {
   let accessToken = req.cookies.jwt;
 
   if (!accessToken) {

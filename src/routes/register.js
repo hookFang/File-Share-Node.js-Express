@@ -1,12 +1,11 @@
 "use strict";
-import { Router } from "express";
-import Users from "../models/user";
-import bcrypt from "bcryptjs";
-import crypto from "crypto";
-import nodemailer from "nodemailer";
-import sanitize from "mongo-sanitize";
-
-const router = Router();
+var express = require("express");
+var router = express.Router();
+var Users = require("../models/user");
+var bcrypt = require("bcryptjs");
+var crypto = require("crypto");
+var nodemailer = require("nodemailer");
+var sanitize = require("mongo-sanitize");
 
 /*GET for register*/
 router.get("/", function (req, res) {
