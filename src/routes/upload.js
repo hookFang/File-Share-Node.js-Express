@@ -31,7 +31,7 @@ router.post("/", function (req, res) {
       if (req.user) {
         canadaTime.add(48, "hours");
       } else {
-        canadaTime.add(3, "hours");
+        canadaTime.add(24, "hours");
       }
 
       if (!req.user) {

@@ -29,7 +29,7 @@ router.post("/", async function (req, res) {
       });
       var mailOptions = {
         to: emailID,
-        from: "<info@edwinchristie.tech>", // This is ignored by Gmail
+        from: "<no-reply@datafileshare.com>", // This is ignored by Gmail
         subject: "A file has been shared with you",
         text:
           "Hello,\n\n" +

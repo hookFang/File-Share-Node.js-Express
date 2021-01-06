@@ -49,7 +49,7 @@ async function sendVerificationEmail(emailID, token) {
   });
   var mailOptions = {
     to: emailID,
-    from: "<info@edwinchristie.tech>", // This is ignored by Gmail
+    from: "<no-reply@datafileshare.com>", // This is ignored by Gmail
     subject: "Please Verify your E-mail",
     text:
       "You are receiving this because you (or someone else) have signed up for a new account.\n\n" +
