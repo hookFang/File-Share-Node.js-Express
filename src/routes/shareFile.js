@@ -19,7 +19,6 @@ router.post("/", async function (req, res) {
       );
       var smtpTransport = nodemailer.createTransport({
         host: process.env.NODEMAILER_HOST,
-        ignoreTLS: true, // I had to ignore tls because there was a version mismatch
         port: 587,
         secure: false,
         auth: {
@@ -29,11 +28,14 @@ router.post("/", async function (req, res) {
       });
       var mailOptions = {
         to: emailID,
-        from: "<no-reply@datafileshare.com>", // This is ignored by Gmail
+        from: "<info@datafileshare.com>", // This is ignored by Gmail
         subject: "A file has been shared with you",
         text:
           "Hello,\n\n" +
-          "A file has been shared with you. Please login to access the File.",
+          "A file has been shared with you. Please login at " +
+          "https://" +
+          process.env.EMAIL_HOSTNAME +
+          "to access the File.",
       };
       smtpTransport.sendMail(mailOptions, function (err) {
         req.flash("success", "File Shared");

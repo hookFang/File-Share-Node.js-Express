@@ -53,7 +53,6 @@ async function generateToken() {
 async function sendVerificationEmail(emailID, token) {
   var smtpTransport = nodemailer.createTransport({
     host: process.env.NODEMAILER_HOST,
-    ignoreTLS: true, // I had to ignore tls because there was a version mismatch
     port: 587,
     secure: false,
     auth: {
@@ -63,12 +62,12 @@ async function sendVerificationEmail(emailID, token) {
   });
   var mailOptions = {
     to: emailID,
-    from: "<no-reply@datafileshare.com>", // This is ignored by Gmail
+    from: "<info@datafileshare.com>", // This is ignored by Gmail
     subject: "Please Verify your E-mail",
     text:
       "You are receiving this because you (or someone else) have signed up for a new account.\n\n" +
       "Please click on the following link, or paste this into your browser to complete the email Verification:\n\n" +
-      "http://" +
+      "https://" +
       process.env.EMAIL_HOSTNAME +
       "/emailVerification/" +
       token +
