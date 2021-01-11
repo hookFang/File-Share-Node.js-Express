@@ -6,6 +6,7 @@ var bcrypt = require("bcryptjs");
 var crypto = require("crypto");
 var nodemailer = require("nodemailer");
 var sanitize = require("mongo-sanitize");
+var EmailVerifier = require("@hookfang/email-verifier");
 
 /*GET for register*/
 router.get("/", function (req, res) {
@@ -13,9 +14,16 @@ router.get("/", function (req, res) {
 });
 
 /*POST for register*/
-router.post("/", function (req, res) {
+router.post("/", async function (req, res) {
+  EmailVerifier.domainsValid({ domainsValid: ["net"] });
   //compare password and confirm password
   const emailID = sanitize(req.body.email);
+
+  //Verify The E-mail syntax
+  if (!(await EmailVerifier.verify(emailID))) {
+    return res.render("register", { registerError: 2 });
+  }
+
   if (req.body.password === req.body.confirmPassword) {
     //Insert user
     bcrypt.hash(req.body.password, 10, async function (err, hash) {
